@@ -1,7 +1,7 @@
 get '/home' do
-  erb :home
+  erb :'shared/home'
 end
 
 get '/register' do
-  erb :register
+  erb :'user/register'
 end
