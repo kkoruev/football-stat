@@ -6,6 +6,8 @@ class User
   property :email,          String
   property :fav_team,       String
   property :hashed_pass,    String
+  property :position_table, String
+  property :points,         String
 end
 
 DataMapper.auto_upgrade!
