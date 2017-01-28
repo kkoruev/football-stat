@@ -10,6 +10,7 @@ module User
       user.email = email
       user.salt = salt
       user.hashed_pass = hashed_password
+      user.save
     end
   end
 end

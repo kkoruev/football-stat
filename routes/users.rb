@@ -9,7 +9,7 @@ get '/register' do
 end
 
 post '/register' do
-  User::Register.register("Kris Koruev", "k.koruev@abv,bg", "kris1")
+  User::Register.register(params[:full_name], params[:email], params[:password])
 end
 
 get '/login' do

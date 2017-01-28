@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/cookies'
 require 'data_mapper'
 
 require_relative './config/database'
