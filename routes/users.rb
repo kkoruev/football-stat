@@ -16,6 +16,10 @@ get '/login' do
   erb :'user/login'
 end
 
+post '/login' do
+  User::Register.login(params[:email], params[:password])
+end
+
 get '/standing' do
   erb :'user/users_standing'
 end
