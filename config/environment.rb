@@ -3,3 +3,4 @@ Dir.glob('%s/models/*.rb' % Dir.pwd).each do |file|
 end
 
 DataMapper.finalize
+DataMapper.auto_upgrade!
