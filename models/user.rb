@@ -14,5 +14,3 @@ module DBModels
     property :points,         String
   end
 end
-
-DataMapper.auto_upgrade!
