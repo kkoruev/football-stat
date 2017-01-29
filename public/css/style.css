@@ -1,0 +1,17 @@
+h1 {
+    text-align: center;
+}
+
+.topdiv {
+    height: 10%;   
+    width:100%;  
+}
+
+.maindiv {
+    width: 100%;
+}
+
+.bottomdiv {
+    height: 10%;
+    width: 100%;
+}
