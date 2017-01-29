@@ -3,15 +3,16 @@
         <h2>Log in<h2>
     </div>
 
-    <form name="log in" id="login">
+    <form action="/login" method="post" name="log in" id="login">
         <div class="field">
             <label>Email Address</label></br>
-            <input type="text">
+            <input name="email" type="text">
         </div>
 
         <div class="field">
             <label>Password</label></br>
-            <input typ="text">
+            <input name="password" typ="text">
         </div>
+        <button type="submit">Advance!</button>
     </form>
 </div>
