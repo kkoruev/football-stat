@@ -1,0 +1,36 @@
+<div>
+    <div class="topdiv">
+        <h1>Submit matches</h1></br>
+    </div>
+    <form action="/matches/submit" method="post" id="matches">
+            <div>
+                <label for="gameweek">Gameweek</label></br>
+                <input name="gameweek" type="text">
+            </div>
+            <div>
+                <label for="date">Date</label></br>
+                <input name="date" type="text">
+            </div>
+            </br>
+            <% @number_of_matches.to_i.times do |count| %>
+                <div>
+                    <select name="<%= 'home' + count.to_s %>" form="matches">    
+                        <% for @team in @team_names %>
+                            <option value="<%= @team %>">
+                                <%= @team %>
+                            </option>
+                        <% end %>  
+                    </select>
+                    <label> VS </label>
+                    <select name="<%= 'away' + count.to_s %>" form="matches">    
+                        <% for @team in @team_names %>
+                            <option value="<%= @team %>">
+                                <%= @team %>
+                            </option>
+                        <% end %>  
+                    </select>
+                </div>
+            <% end %>
+        <button type="submit">Submit!</button>
+    </form>
+</div>
