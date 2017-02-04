@@ -1,16 +1,22 @@
 function add_team() {
-    alert("HERE")
     var new_team = $('#newTeamId')[0].value 
-    alert(new_team)
     $.ajax({
-        url: "/teams",
+        url: "/teams/" + new_team,
         cache: false,
         type: "POST",
-        data: {
-            name: new_team
-        }, 
         success: function() {
-            alert("NICE A")
+            location.reload(true)
+        }
+    });
+}
+
+function delete_team(team_name) {
+    $.ajax({
+        url: "/teams/" + team_name,
+        cache: false,
+        type: "DELETE",
+        success: function() {
+            location.reload(true)
         }
     });
 }

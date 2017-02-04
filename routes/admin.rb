@@ -5,7 +5,10 @@ get '/teams' do
   erb :'admin/edit_teams'
 end
 
-post '/teams' do
-  p params
-  p "Here"
+post '/teams/:name' do |name|
+  Util::Team.add_team(name)
+end
+
+delete '/teams/:name' do |name|
+  Util::Team.delete_team(name)
 end
