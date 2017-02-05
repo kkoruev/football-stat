@@ -12,26 +12,46 @@ module Util
     end
 
     def self.add_predicted_matches(matches, id)
-      Prediction.save_predictions(matches, id)
+      parsed_matches = Prediction.parse_matches(matches)
+      p parsed_matches
+      Prediction.save_predictions(parsed_matches, id)
+    end
+
+    def self.add_results(matches)
+      parse_matches = Prediction.parse_matches(matches)
+      #get match id
+      #get_result
+      #function(match_id, result)
     end
 
     private
 
-    def self.save_predictions(matches, user_id)
+    def self.parse_matches(matches)
       len = matches.keys.length / 2
       keys = matches.keys
-      user = DBModels::User.get(user_id)
+      parsed_matches = {}
       len.times do
         home = keys.shift
         away = keys.shift
         id = home[0].to_i
+        parsed_matches[id] = [matches[home], matches[away]]
+      end
+      parsed_matches
+    end
+
+    def self.save_predictions(matches, user_id)
+      user = DBModels::User.get(user_id)
+      matches.keys.each do |id|
         match = DBModels::Match.get(id)
-        prediction = Prediction.prediction_object(matches[home], matches[away], id, user_id)
+        home = matches[id].first
+        away = matches[id].last
+        prediction = Prediction.prediction_object(home, away, id, user_id)
         match.predictions.push(prediction)
         user.predictions.push(prediction)
         match.save
         user.save
       end
+      true
     end
 
     def self.prediction_object(home, away, id, user_id)

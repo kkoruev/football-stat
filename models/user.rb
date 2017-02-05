@@ -11,6 +11,7 @@ module DBModels
     property :hashed_pass,    String
     property :salt,           String
     property :position_table, String
+    property :points,         Integer
 
     has n, :predictions
   end
