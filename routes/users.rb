@@ -40,5 +40,5 @@ end
 
 post '/predictions' do
   return 0  if cookies.empty?
-  Util::Prediction.add_predicted_matches(params)
+  Util::Prediction.add_predicted_matches(params, cookies[:id])
 end
