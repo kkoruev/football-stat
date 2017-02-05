@@ -11,8 +11,9 @@ module User
     def self.login(email, password)
       user = Register.user_with_email(email)
       return false if user.nil?
-      hashed_password = PasswordUtil.hashed_password(password, user.salt)
-      return user.hashed_pass == hashed_password
+      hashed_password = Util::Password.hashed_password(password, user.salt)
+      return user if user.hashed_pass == hashed_password
+      return nil
     end
 
     private

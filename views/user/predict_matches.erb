@@ -1,9 +1,9 @@
 <div>
     <div class="topdiv">
-        <h1>Update results</h1></br>
+        <h1>Make your predictions!</h1></br>
     </div>
-    <form action="/results/update" method="post" id="update">
-        <% @current_matches.each do |match| %>
+    <form action="" method="post" id="update">
+        <% matches.each do |match| %>
             <label> <%= match.home_team %> </label>
             <label> VS </label>
             <label> <%= match.away_team %> </label>

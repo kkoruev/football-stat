@@ -11,5 +11,11 @@ module DBModels
     property :away_score,     Integer
     property :date,           Date
     property :gameweek,       Integer
+
+    has n, :predictions
+
+    def self.current
+      all(:home_score => nil)
+    end
   end
 end

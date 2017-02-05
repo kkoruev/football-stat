@@ -34,11 +34,6 @@ end
 get '/predictions' do
   return 0 if cookies.empty?
   erb :'user/predict_matches', :locals => {
-    :matches => Util::Prediction.matches_for_prediction(cookies[:id])
-  }
-end
-
-post '/predictions' do
-  return 0  if cookies.empty?
-  Util::Prediction.add_predicted_matches(params)
+    } 
+  @current_matches = Util::Prediction.matches_for_prediction(cookies[:id])
 end

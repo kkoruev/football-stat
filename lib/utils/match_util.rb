@@ -8,5 +8,9 @@ module Util
       match.gameweek = gameweek
       match.save
     end
+
+    def self.current_matches
+      p DBModels::Match.current
+    end
   end
 end

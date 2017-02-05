@@ -28,9 +28,19 @@ post '/matches/submit' do
     away_t = params[key_a]
     gameweek = params["gameweek"]
     date = params["date"]
-    return false if Util::Match.add_match(home_t, away_t, date, gameweek.to_i)
+    return false unless Util::Match.add_match(home_t, away_t, date, gameweek.to_i)
   end
   return true
+end
+
+get '/results/update' do
+  @current_matches = Util::Match.current_matches
+  erb :'admin/update_results'
+end
+
+post '/results/update' do
+  p params
+  true
 end
 
 post '/teams/:name' do |name|
