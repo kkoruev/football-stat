@@ -4,6 +4,7 @@ module Util
   class Prediction
     def self.matches_for_prediction(id)
       predictions = DBModels::Prediction.predictions_by_user(id)
+      p predictions
       matches = []
       predictions.each do |prediction|
         match = DBModels::Match.get(prediction.match_id)
@@ -22,9 +23,19 @@ module Util
       parsed_matches = Prediction.parse_matches(matches)
       results = Prediction.construct_result_hash(parsed_matches)
       update_points(results)
+      update_matches(results)
     end
 
     private
+
+    def self.update_matches(results)
+      results.keys.each do |key|
+        match = DBModels::Match.get(key)
+        match.home_score = results[key].home_team
+        match.away_score = results[key].away_team
+        match.save
+      end
+    end
 
     def self.update_points(results)
       results.keys.each do |id|
@@ -37,6 +48,8 @@ module Util
       all_predictions.each do |prediciton|
         result = ::Match::Result.new(prediciton.home_score, prediciton.away_score)
         update_points_for_user(prediciton.user_id, result, final_result)
+        prediciton.done = true
+        prediciton.save
       end
     end
 
