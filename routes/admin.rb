@@ -1,5 +1,6 @@
 require_relative '../lib/utils/team_util'
 require_relative '../lib/utils/match_util'
+require_relative '../lib/utils/prediction_util'
 
 get '/teams' do
   @teams = Util::Team.all_teams
@@ -39,7 +40,7 @@ get '/results/update' do
 end
 
 post '/results/update' do
-  p params
+  Util::Prediction.add_results(params)
   true
 end
 

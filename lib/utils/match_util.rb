@@ -10,7 +10,7 @@ module Util
     end
 
     def self.current_matches
-      p DBModels::Match.current
+      DBModels::Match.current
     end
   end
 end

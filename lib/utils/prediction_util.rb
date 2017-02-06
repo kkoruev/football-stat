@@ -1,3 +1,5 @@
+require_relative '../match/result'
+
 module Util
   class Prediction
     def self.matches_for_prediction(id)
@@ -13,18 +15,48 @@ module Util
 
     def self.add_predicted_matches(matches, id)
       parsed_matches = Prediction.parse_matches(matches)
-      p parsed_matches
       Prediction.save_predictions(parsed_matches, id)
     end
 
     def self.add_results(matches)
-      parse_matches = Prediction.parse_matches(matches)
-      #get match id
-      #get_result
-      #function(match_id, result)
+      parsed_matches = Prediction.parse_matches(matches)
+      results = Prediction.construct_result_hash(parsed_matches)
+      update_points(results)
     end
 
     private
+
+    def self.update_points(results)
+      results.keys.each do |id|
+        update_points_for_match(id, results[id])
+      end
+    end
+
+    def self.update_points_for_match(id, final_result)
+      all_predictions = DBModels::Prediction.all(:match_id => id)
+      all_predictions.each do |prediciton|
+        result = ::Match::Result.new(prediciton.home_score, prediciton.away_score)
+        update_points_for_user(prediciton.user_id, result, final_result)
+      end
+    end
+
+    def self.update_points_for_user(id, user_result, final_result)
+      return true if user_result.empty?
+      points = final_result.compare(user_result)
+      return true if points == 0
+      user = DBModels::User.get(id)
+      user.points = points + user.points
+      user.save
+    end
+
+    def self.construct_result_hash(matches)
+      hash_result = {}
+      matches.keys.each do |key|
+        result = ::Match::Result.new(matches[key].first, matches[key].last)
+        hash_result[key] = result unless result.empty?
+      end
+      hash_result
+    end
 
     def self.parse_matches(matches)
       len = matches.keys.length / 2
