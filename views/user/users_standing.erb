@@ -1,6 +1,7 @@
 <div>
-    <% @users = ['Kris', 'John', 'Walker'] %>
-    <% for @user in @users %>
-        <label><%= @user %></label><br>
+    <% @users = ['Kris',  'John', 'Walker'] %>
+    <% standing.each do |user|  %>
+        <label><%= user.email %></label><br>
+        <label><%= user.points %></label><br>
     <% end %>
 </div>

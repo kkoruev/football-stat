@@ -26,6 +26,10 @@ module Util
       update_matches(results)
     end
 
+    def self.standing
+      DBModels::User.all
+    end
+
     private
 
     def self.update_matches(results)

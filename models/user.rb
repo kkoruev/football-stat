@@ -12,6 +12,7 @@ module DBModels
     property :salt,           String
     property :position_table, String
     property :points,         Integer,    :default => 0
+    property :role,           Integer,    :default => 0
 
     has n, :predictions
   end
