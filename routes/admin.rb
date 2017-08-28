@@ -8,6 +8,8 @@ get '/teams' do
 end
 
 get '/matches' do
+  @current_added = Util::Match.current_matches
+  p @current_added
   erb :'admin/add_matches'
 end
 
@@ -29,7 +31,7 @@ post '/matches/submit' do
     away_t = params[key_a]
     gameweek = params["gameweek"]
     date = params["date"]
-    return false unless Util::Match.add_match(home_t, away_t, date, gameweek.to_i)
+    p Util::Match.add_match(home_t, away_t, date, gameweek.to_i)
   end
   return true
 end
@@ -40,6 +42,7 @@ get '/results/update' do
 end
 
 post '/results/update' do
+  p params
   Util::Prediction.add_results(params)
   true
 end
