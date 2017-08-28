@@ -4,7 +4,6 @@ module Util
   class Prediction
     def self.matches_for_prediction(id)
       predictions = DBModels::Prediction.predictions_by_user(id)
-      p predictions
       matches = []
       predictions.each do |prediction|
         match = DBModels::Match.get(prediction.match_id)
@@ -21,7 +20,9 @@ module Util
 
     def self.add_results(matches)
       parsed_matches = Prediction.parse_matches(matches)
+      p parsed_matches
       results = Prediction.construct_result_hash(parsed_matches)
+      p results
       update_points(results)
       update_matches(results)
     end

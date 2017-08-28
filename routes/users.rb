@@ -39,6 +39,7 @@ end
 post '/login' do
   user = User::Register.login(params[:email], params[:password])
   redirect '/error' if user.nil?
+  p user
   cookies[:id] = user.id
   cookies[:role] = user.role
   redirect '/home'

@@ -7,5 +7,8 @@ module DBModels
     property :id,             Serial
     property :name,           String
     property :other_names,    String
+
+          
+    has n, :informations
   end
 end
