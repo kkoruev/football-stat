@@ -9,6 +9,7 @@
             <label> <%= match.away_team %> </label>
             <input type="number" name="<%= match.id.to_s + 'home_s' %>">
             <input type="number" name="<%= match.id.to_s + 'away_s' %>">
+            <label> <%= " -- Gameweek " +  match.gameweek.to_s %> </label>
             </br>
         <% end %> 
         <button type="submit">Submit!</button>

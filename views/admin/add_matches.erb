@@ -2,8 +2,18 @@
     <div class="topdiv">
         <h1>Add matches</h1></br>
     </div>
+    <div class="c2">
+        <h2>Added matches</h2></br>
+        <% for match in @current_added %>
+            <label> <%= match.home_team %> </label>
+            <label> VS </label>
+            <label> <%= match.away_team %> </label>
+            <label> <%= " -- Gameweek " + match.gameweek.to_s %> </label></br>
+        <% end %>
+    </div>
+    </br></br></br>
     <form action="/matches" method="post" name="add matches" id"matches">
-        <div>
+        <div class="c2">
             <label for="number">Number of matches</label></br>
             <input name="number" type="text">
         </div>

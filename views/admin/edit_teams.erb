@@ -8,7 +8,7 @@
                 <li class="list-group-item">
                     <span id="<%=@team.name%>" onclick="delete_team(this.id)" 
                             class="badge">
-                        12
+                        delete
                     </span>
                     <h5><%= @team.name %></h5>
                 </li>
@@ -17,14 +17,14 @@
     </div>
     <div class="bottomdiv">
         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" 
-            data-target="#myModal">Open Modal</button>
+            data-target="#myModal">Add new team</button>
         <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" 
                             data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
+                        <h4 class="modal-title">Name of the new team</h4>
                     </div>
                     <div class="modal-body">
                         <input type="text" value"" id="newTeamId"/>
