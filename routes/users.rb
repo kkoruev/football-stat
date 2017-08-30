@@ -54,8 +54,15 @@ end
 
 get '/profile' do
   redirect '/login' unless User::Register.user_logged?(cookies)
-  erb :'user/profile'
+  erb :'user/profile', :locals => {
+    :team_names => ["wssssssss", "Dddddddd"]
+  }
 end
+
+post "/edit/profile" do
+  p params
+end
+
 
 get '/predictions' do
   redirect '/login' unless User::Register.user_logged?(cookies)

@@ -3,13 +3,14 @@ require_relative '../lib/utils/match_util'
 require_relative '../lib/utils/prediction_util'
 
 get '/teams' do
+  redirect '/home' unless User::Register.admin_logged?(cookies) 
   @teams = Util::Team.all_teams
   erb :'admin/edit_teams'
 end
 
 get '/matches' do
+  redirect '/home' unless User::Register.admin_logged?(cookies)
   @current_added = Util::Match.current_matches
-  p @current_added
   erb :'admin/add_matches'
 end
 
@@ -37,6 +38,7 @@ post '/matches/submit' do
 end
 
 get '/results/update' do
+  redirect '/home' unless User::Register.admin_logged?(cookies)
   @current_matches = Util::Match.current_matches
   erb :'admin/update_results'
 end
