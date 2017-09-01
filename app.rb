@@ -1,7 +1,5 @@
 require 'sinatra'
 require 'sinatra/cookies'
-require 'data_mapper'
-require 'dm-noisy-failures'
 
 require_relative './config/database'
 require_relative './config/environment'

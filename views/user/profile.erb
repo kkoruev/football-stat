@@ -1,8 +1,24 @@
 <div>
     <% @profile = {full_name: 'Kris',
-                   email: 'k.koruev@abv.bg' } %>
+                   email: 'k.koruev@abv.bg',
+                   team: "Chelsea" } %>
     <label>Full name: <%= @profile[:full_name] %> </label></br>
-    <label>Email: <%= @profile[:email] %> </label>
+    <label>Email: <%= @profile[:email] %> </label></br>
+
+    <form action="/edit/profile" method="post" form="teams"> 
+        <div class="field">
+            <label>Full Name: <%= @profile[:full_name] %></label></br>
+            <input type="text" name="full_name">
+        </div>
+
+        <div class="field">
+            <label>Email Address: <%= @profile[:email] %></label></br>
+            <input type="text" name="email">
+        </div>
+
+        <button type="submit" class="btn btn-success">Advance!</button>
+    </form>
+
 </div>
 
 
