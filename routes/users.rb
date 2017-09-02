@@ -1,5 +1,7 @@
 require_relative '../lib/user/register'
 require_relative '../lib/utils/prediction_util'
+require_relative '../lib/utils/user_util'
+require_relative '../lib/utils/team_util'
 
 
 get '/' do
@@ -54,13 +56,20 @@ end
 
 get '/profile' do
   redirect '/login' unless User::Register.user_logged?(cookies)
+  profile = Util::User.current_user_as_hash(cookies[:id])
+  team_names = Util::Team.all_team_names
+  team_names.unshift(profile[:fav_team]) unless profile[:fav_team].nil?
   erb :'user/profile', :locals => {
-    :team_names => ["wssssssss", "Dddddddd"]
+    :team_names => team_names,
+    :profile => Util::User.current_user_as_hash(cookies[:id])
   }
 end
 
-post "/edit/profile" do
-  p params
+post '/edit/profile' do
+  Util::User.update_user_mail(cookies[:id], params[:email])
+  Util::User.update_user_name(cookies[:id], params[:full_name])
+  Util::User.update_user_favourite_name(cookies[:id], params[:team])
+  redirect '/profile'
 end
 
 

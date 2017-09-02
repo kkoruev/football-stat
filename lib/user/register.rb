@@ -19,10 +19,8 @@ module User
 
     def self.user_logged?(cookies_map)
       is_logged = !(cookies_map[:id].nil? or cookies_map[:id].empty?)
-      p "is logged in user loggd " + is_logged.to_s
+      return false unless is_logged
       is_user = cookies_map[:role].to_i == 0 if is_logged
-      p "user role " + cookies_map[:role]
-      p "is user in user_logged " + is_user.to_s
       is_logged && is_user
     end
 
