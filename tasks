@@ -18,3 +18,19 @@ User panel
 Tests! - Friday
 
 Design stuff - Thursday
+
+######################################################
+
+UI - Admin module
+
+UI - User module
+ - home page
+ - profile page
+ - user_standing
+ - fav_team_last_matches
+ - predict_matches
+
+UI - App module
+ - home page
+ - login page
+ - register page
