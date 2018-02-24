@@ -23,11 +23,14 @@ module DBModels
     has n, :predictions
 
     def self.create_default_admin
+      admin = DBModels::User.first(:email_addres => 'admin@football_stat.com')
+      return true unless admin.nil?
       salt = Util::Password.generate_salt
       hashed_password = Util::Password('admin', salt)
       DBModels::User.create(:full_name => 'admin', 
                             :email_addres => 'admin@football_stat.com',
-                            :hashed_pass=>  )
+                            :hashed_pass => hashed_password,
+                            :salt => salt)
     end
 
   end
