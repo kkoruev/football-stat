@@ -1,18 +1,17 @@
-require_relative '../utils/password_util'
+require_relative '../lib//utils/password_util'
 require 'dm-validations'
 
 module DBModels
   class User
     include DataMapper::Resource
-
+    
     self.raise_on_save_failure = true
-
     storage_names[:default] = 'users'
 
     property :id,             Serial
     property :full_name,      String, :required => true
-    property :email,          String, :required => true, :unique => true,
-      :format => :email_addres
+    property :email,          String, :required => true, :unique => true
+      # :format => /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
     property :fav_team,       String
     property :hashed_pass,    String, :required => true
     property :salt,           String, :required => true
@@ -23,15 +22,14 @@ module DBModels
     has n, :predictions
 
     def self.create_default_admin
-      admin = DBModels::User.first(:email_addres => 'admin@football_stat.com')
+      admin = DBModels::User.first(:email => 'admin@football_stat.com')
       return true unless admin.nil?
       salt = Util::Password.generate_salt
-      hashed_password = Util::Password('admin', salt)
+      hashed_password = Util::Password.hashed_password('admin', salt)
       DBModels::User.create(:full_name => 'admin', 
-                            :email_addres => 'admin@football_stat.com',
+                            :email => 'admin@football_stat.com',
                             :hashed_pass => hashed_password,
                             :salt => salt)
     end
-
   end
 end

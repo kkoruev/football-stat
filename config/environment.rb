@@ -11,8 +11,7 @@ module Config
     end
 
     def load_models
-      Dir.glob('%s/lib/models/*.rb' % Dir.pwd).each do |file|
-        p file
+      Dir.glob('%s/models/*.rb' % Dir.pwd).each do |file|
         require_relative file
       end
     end

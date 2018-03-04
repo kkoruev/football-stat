@@ -7,7 +7,9 @@ import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { RegisterComponent } from './register/register.component';
 
-import { LoginService } from './login.service'
+import { UserService } from './user.service'
+
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,9 +20,10 @@ import { LoginService } from './login.service'
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [LoginService],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
