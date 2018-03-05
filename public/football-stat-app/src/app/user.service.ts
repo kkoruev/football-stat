@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { catchError, map, tap } from 'rxjs/operators';
@@ -19,16 +19,13 @@ export class UserService {
 
   private loginUrl = 'http://127.0.0.1:9393/login';
 
-
-
-
   constructor(
     private http: HttpClient,
   ) { }
 
   login(email: string, password: string): Observable<any> {
-    var params = {'email': email, 'password': password};
-    return this.http.post(this.loginUrl, "dsa", httpOptions)
+    var params = new HttpParams().set('email', email).set('password', password);
+    return this.http.post(this.loginUrl, params)
       .pipe(
         catchError(this.handleError)
       )
