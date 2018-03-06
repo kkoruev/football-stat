@@ -8,6 +8,8 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
+import { User } from './user'
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
@@ -17,7 +19,9 @@ const httpOptions = {
 @Injectable()
 export class UserService {
 
-  private loginUrl = 'http://127.0.0.1:9393/login';
+  private apiUril = 'http://127.0.0.1:9393';
+  private loginUrl = this.apiUril + '/login';
+  private registerUrl = this.apiUril + '/register';
 
   constructor(
     private http: HttpClient,
@@ -30,6 +34,14 @@ export class UserService {
         catchError(this.handleError)
       )
   }
+
+  register(user: User): Observable<any> {
+    return this.http.post(this.registerUrl, user)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+  
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
