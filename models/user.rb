@@ -9,7 +9,7 @@ module DBModels
     storage_names[:default] = 'users'
 
     property :id,             Serial
-    property :full_name,      String, :required => true
+    property :nickname,       String, :required => true
     property :email,          String, :required => true, :unique => true
       # :format => /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
     property :fav_team,       String

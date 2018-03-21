@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
 
   register(email: string, nickname: string, password: string): void {
     
-    this.userService.register({email, password} as User)
+    this.userService.register({email, nickname,  password} as User)
       .subscribe(_ => "Kris");
   }
 

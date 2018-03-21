@@ -7,7 +7,9 @@ module Routes
     end
 
     post '/register' do
-      p params
+      request_params = JSON.parse(request.body.read)
+      user = UserDeserializer.new(request_params).registration_data
+      p user
     end
 
     post '/login' do
