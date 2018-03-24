@@ -12,6 +12,13 @@ module Routes
       p user
     end
 
+    get '/test' do
+      user = DBModels::User.new
+      user.email = "kris"
+      p user.exists?
+      p "Here"
+    end
+
     post '/login' do
       p params
       p "hereee"

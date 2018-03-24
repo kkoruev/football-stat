@@ -1,5 +1,3 @@
-require_relative '../../models/user'
-
 class UserDeserializer
 
   def initialize(user_json)

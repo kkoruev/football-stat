@@ -1,6 +1,6 @@
 require 'json'
 require_relative '../lib/user/user_deserializer'
-require_relative '../models/user'
+
 
 module Routes
   class ApplicationController < Sinatra::Base

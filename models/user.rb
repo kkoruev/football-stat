@@ -1,9 +1,10 @@
-require_relative '../lib//utils/password_util'
-require 'dm-validations'
+require_relative '../lib/utils/password_util'
+require_relative '../lib/user/user_functions'
 
 module DBModels
   class User
     include DataMapper::Resource
+    include UserFunctions
     
     self.raise_on_save_failure = true
     storage_names[:default] = 'users'
@@ -30,6 +31,10 @@ module DBModels
                             :email => 'admin@football_stat.com',
                             :hashed_pass => hashed_password,
                             :salt => salt)
+    end
+
+    def register(password)
+      
     end
   end
 end

@@ -1,5 +1,9 @@
 require 'sinatra/base'
 require 'rubygems'
+require 'data_mapper'
+require 'dm-noisy-failures'
+require 'dm-validations'
+require 'dm-aggregates'
 
 require_relative './routes/user_controller'
 require_relative './routes/admin_controller'
