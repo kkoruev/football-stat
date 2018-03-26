@@ -1,7 +1,6 @@
+require_relative '../utils/password_util'
+
 module UserFunctions
-  def exists?
-    DBModels::User.count(:email => self.email) > 0
-  end  
   # def self.register(full_name, email, password, is_admin = 0)
   #   user = Register.make_user(full_name, email, password, is_admin)
   #   existing_user = Register.user_with_email(email)

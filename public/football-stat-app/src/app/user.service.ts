@@ -37,9 +37,9 @@ export class UserService {
 
   register(user: User): Observable<any> {
     return this.http.post(this.registerUrl, user)
-      .pipe(
-        catchError(this.handleError)
-      )
+      // .pipe(
+      //   catchError(this.handleError)
+      // )
   }
   
 

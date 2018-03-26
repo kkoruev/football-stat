@@ -1,6 +1,7 @@
 require 'json'
 require_relative '../lib/user/user_deserializer'
-
+require_relative '../lib/user/user_error_messages'
+require_relative '../lib/exceptions/no_such_user_error'
 
 module Routes
   class ApplicationController < Sinatra::Base

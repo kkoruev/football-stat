@@ -1,10 +1,6 @@
-require_relative '../lib/utils/password_util'
-require_relative '../lib/user/user_functions'
-
 module DBModels
   class User
     include DataMapper::Resource
-    include UserFunctions
     
     self.raise_on_save_failure = true
     storage_names[:default] = 'users'
@@ -22,17 +18,25 @@ module DBModels
 
     has n, :predictions
 
-    def self.create_default_admin
-      admin = DBModels::User.first(:email => 'admin@football_stat.com')
+    def exists?
+      DBModels::User.count(:email => self.email) > 0
+    end
+  
+    def create_default_admin
+      admin = DBModels::User.first(:email => 'admin1@football_stat.com')
       return true unless admin.nil?
       salt = Util::Password.generate_salt
       hashed_password = Util::Password.hashed_password('admin', salt)
-      DBModels::User.create(:full_name => 'admin', 
-                            :email => 'admin@football_stat.com',
+      DBModels::User.create(:nickname => 'admin', 
+                            :email => 'admin1@football_stat.com',
                             :hashed_pass => hashed_password,
                             :salt => salt)
     end
 
+    def authenticate(password)
+
+    end
+    
     def register(password)
       
     end

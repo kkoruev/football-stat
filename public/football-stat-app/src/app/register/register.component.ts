@@ -10,7 +10,6 @@ import { UserService } from '../user.service'
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
   constructor(
     private userService: UserService
   ) { }
@@ -19,9 +18,17 @@ export class RegisterComponent implements OnInit {
   }
 
   register(email: string, nickname: string, password: string): void {
-    
+    var data1;
+    var error1;
+
     this.userService.register({email, nickname,  password} as User)
-      .subscribe(_ => "Kris");
+      .subscribe(
+        data => data1 = data,
+        error => error1 = error
+      );
+        
+    console.log(data1)
+    console.log(error1)
   }
 
 }
