@@ -34,9 +34,15 @@ module DBModels
     end
 
     def authenticate(password)
-
+      no_such_user = "User with specified email could not be found"
+      wrong_password = "Incorrect password"
+      raise LoginAuthenticationError.new(no_such_user) unless exists?
+      user = DBModels::User.first(:email => email)
+      hashed_pass_to_check = Util::Password.hashed_password(password, user.salt)
+      password_match = (user.hashed_pass == hashed_pass_to_check)
+      raise LoginAuthenticationError.new(wrong_password) unless password_match
     end
-    
+
     def register(password)
       
     end

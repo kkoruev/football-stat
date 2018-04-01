@@ -22,10 +22,9 @@ module Routes
 
     get '/test' do
       user = DBModels::User.new
-      user.email = "kris"
-      p user.exists?
-      p "Here"
-      halt 400, 'Validaiton failed'
+      user.email = "lok"
+      user = user.authenticate("1")
+      "YOU ARE LOGGED IN"
     end
 
     post '/login' do
