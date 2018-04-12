@@ -20,21 +20,32 @@ module Routes
       end
     end
 
-    get '/test' do
-      user = DBModels::User.new
-      user.email = "lok"
-      user = user.authenticate("1")
-      "YOU ARE LOGGED IN"
-    end
-
     post '/login' do
       request_params = JSON.parse(request.body.read)
       user = UserDeserializer.new(request_params).login_data
-      
+      # begin
+      #   user.authenticate
+      # rescue
+
     end
 
     get '/login' do
       p params
     end
+
+    get '/userTasks' do
+      h = { :matches_prediction => "Get all available matches for prediction",
+            :standing => "Get user standings",
+            :points_from_matches => "All predicted matches",
+            :update_profile => "Updating profile info" }
+    end
+
+    get '/test' do
+      user = DBModels::User.new
+      user.email = "lok"
+      user = user.authenticate("2")
+      "YOU ARE LOGGED IN"
+    end
+
   end
 end
