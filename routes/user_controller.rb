@@ -2,7 +2,7 @@ require_relative "./application_controller"
 
 module Routes
   class UserController < ApplicationController
-    include UserErrorMessages
+    include ErrorMessages
 
     get '/' do
       "Hello from User!"
@@ -15,7 +15,6 @@ module Routes
       begin
         user.save
       rescue DataMapper::SaveFailureError => ex
-        p "Here"
         halt 400, user_not_saved(user)
       end
     end

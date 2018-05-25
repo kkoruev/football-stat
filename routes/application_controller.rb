@@ -1,8 +1,14 @@
 require 'json'
+
 require_relative '../lib/user/user_deserializer'
 require_relative '../lib/team/team_deserializer'
-require_relative '../lib/user/user_error_messages'
+require_relative '../lib/match/matches_deserializer'
+
+require_relative '../lib/match/matches_serializer'
+
+require_relative '../lib/user/error_messages'
 require_relative '../lib/exceptions/login_authentication_error'
+
 
 module Routes
   # Routes base class that inherits from Sinatra base.
