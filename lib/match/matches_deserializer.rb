@@ -13,8 +13,9 @@ class MatchesDeserializer
       model.away_team = match['away_team']
       model.date = match['date']
       model.gameweek = match['gameweek']
-      p model
+      matches_for_predicting.push(model)
     end
+    matches_for_predicting
   end
 
   # private_class_method :new
