@@ -7,15 +7,18 @@ module Routes
     end
 
     post '/matches' do
-
+      "dasdas"
+      request_params = JSON.parse(request.body.read)
+      p request_params
+      puts request_params
     end
 
     get '/teams' do
 
     end
-    
+
     post '/team' do
-      
+
     end
 
     get '/adminTasks' do
