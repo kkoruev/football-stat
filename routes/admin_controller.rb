@@ -30,10 +30,13 @@ module Routes
       # update user points based on predicted matches
     end
 
+    delete '/matches' do
+      puts params
+      "DELETION"
     end
 
     get '/teams' do
-      DBModels::Team.all
+      Team::TeamSerializer.new.teams_json(DBModels::Team.all)
     end
 
     put '/teams/:name' do |name|
@@ -52,4 +55,4 @@ module Routes
       "
     end
   end
-end
+  end
