@@ -8,9 +8,9 @@ module Routes
       "Hello from Admin!"
     end
 
-    post '/predict/matches' do
+    post '/matches/predict' do
       request_params = JSON.parse(request.body.read)
-      matches = MatchesDeserializer.new(request_params).matches_for_predicting
+      matches = Match::MatchesDeserializer.new.matches_for_predicting(request_params)
       matches.each do |match|
         begin
           match.save
@@ -20,18 +20,30 @@ module Routes
       end
     end
 
-    get '/predict/matches' do
-      p "HEREEEEEEEEEEEEEEE"
+    get '/matches/predict' do
       matches = DBModels::Match.current
-      MatchesSerializer.new.matches_for_prediction(matches)
+      Match::MatchesSerializer.new.matches_for_prediction(matches)
+    end
+
+    post '/matches/result' do
+      # update matches results in the DB
+      # update user points based on predicted matches
+    end
+
     end
 
     get '/teams' do
-
+      DBModels::Team.all
     end
 
-    post '/team' do
-
+    put '/teams/:name' do |name|
+      team = DBModels::Team.new
+      team.name = name
+      begin
+        team.save
+      rescue DataMapper::SaveFailureError => ex
+        halt 400, team_not_saved(name)
+      end
     end
 
     get '/adminTasks' do

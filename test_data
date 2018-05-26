@@ -1,0 +1,14 @@
+[
+  {
+   "home_team" : "Arsneal",
+   "away_team" : "Chelsea",
+   "date" : "12.01.2017",
+   "gameweek" : 1
+  },
+  {
+   "home_team" : "Crystal Palace",
+   "away_team" : "Newcastle",
+   "date" : "12.01.2018",
+   "gameweek" : 2
+  }
+]

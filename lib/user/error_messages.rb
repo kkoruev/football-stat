@@ -9,6 +9,10 @@ module ErrorMessages
   end
 
   def match_not_saved(match)
-    "Could not save match #{MatchesSerializer.new.match_for_prediction(match)}"
+    "Could not save match #{Match::MatchesSerializer.new.match_for_prediction(match)}"
+  end
+
+  def team_not_saved(team_name)
+    "Could not save team with name = #{team_name}"
   end
 end
