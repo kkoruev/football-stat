@@ -15,7 +15,7 @@ Config::Database.new.setup
 Config::Environment.new.setup(false)
 DBModels::User.new.create_default_admin
 
-use Rack::MethodOverride
+
 map('/') { run Routes::UserController }
 map('/admin') { run Routes::AdminController }
 

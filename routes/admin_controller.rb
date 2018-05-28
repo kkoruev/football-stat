@@ -8,7 +8,7 @@ module Routes
       "Hello from Admin!"
     end
 
-    post '/matches/predict' do
+    post '/matches' do
       request_params = JSON.parse(request.body.read)
       matches = Match::MatchesDeserializer.new.matches_for_predicting(request_params)
       matches.each do |match|
@@ -20,19 +20,50 @@ module Routes
       end
     end
 
-    get '/matches/predict' do
-      matches = DBModels::Match.current
+    get '/matches' do
+      matches = DBModels::Match.new.current
       Match::MatchesSerializer.new.matches_for_prediction(matches)
     end
 
-    post '/matches/result' do
-      # update matches results in the DB
-      # update user points based on predicted matches
+    get '/matches/:gameweek' do
+      matches = DBModels::Match.new.matches_from_gameweek(gameweek)
+      halt 400, no_such_gameweek(gameweek) if matches.empty?
+
     end
 
-    delete '/matches' do
-      puts params
-      "DELETION"
+    post '/matches/:gameweek/results' do
+      matches = DBModels::Match.matches_from_gameweek(gameweek)
+      halt 400, no_such_gameweek(gameweek) if matches.empty?
+
+      match{
+        id = 1
+        h_t_n ..
+        ..
+      }
+
+      result{
+        id = 1
+        h_t_s = 1
+        a_t_s = 2
+      }
+
+      prediction{
+        id = 1
+        h_t_s = 1
+        a_t_s = 2
+        user_id = ?
+        match_id = ?
+      }
+
+      # get all predictions based on match_id
+      # sum points for all predictions and update user table with summed points
+      # update matches results in the DB
+    end
+
+    delete '/matches/:gameweek' do |gameweek|
+      matches = DBModels::Match.gameweek(gameweek)
+      halt 400, no_such_gameweek(gameweek) if matches.empty?
+      halt 400, could_not_delete_matches(gameweek) unless matches.destroy
     end
 
     get '/teams' do
@@ -55,4 +86,4 @@ module Routes
       "
     end
   end
-  end
+end

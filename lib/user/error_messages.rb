@@ -15,4 +15,12 @@ module ErrorMessages
   def team_not_saved(team_name)
     "Could not save team with name = #{team_name}"
   end
+
+  def no_such_gameweek(gameweek)
+    "Could not find matches from gameweek = #{gameweek}"
+  end
+
+  def could_not_delete_matches(gameweek)
+    "Could not delete matches from gameweek = #{gameweek}! Chek db conneciton."
+  end
 end
