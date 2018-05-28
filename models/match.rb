@@ -14,8 +14,12 @@ module DBModels
 
     has n, :predictions
 
-    def self.current
-      all(:home_score => nil)
+    def current
+      DBModels::Match.all(:home_score => nil)
+    end
+
+    def matches_from_gameweek(gameweek)
+      DBModels::Match.all(:gameweek => gameweek)
     end
   end
 end
