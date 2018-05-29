@@ -1,4 +1,4 @@
-[
+matches for predictin [
   {
    "home_team" : "Arsneal",
    "away_team" : "Chelsea",
@@ -12,3 +12,10 @@
    "gameweek" : 2
   }
 ]
+
+registraiton data
+{
+"email": "k.koruev@k.bg",
+"password": "test",
+"nickname": "kris1"
+}
