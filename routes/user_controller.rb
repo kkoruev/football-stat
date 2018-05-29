@@ -34,6 +34,25 @@ module Routes
       "Succeed"
     end
 
+    get '/matches' do
+      matches = DBModels::Match.new.current
+      Match::MatchesSerializer.new.matches_for_prediction(matches)
+    end
+
+    post '/predictions'
+      # prediction_for_match
+      # {
+      #   match_id,
+      #   h_s,
+      #   a_s
+      # }
+      request_params = parse_params(request.body.read)
+      halt 400, parse_error if request_params.empty?
+      prediction = Match::MatchesDeserializer.new.prediction(request_params)
+      p prediction
+      "dsad"
+    end
+
     get '/login' do
       p params
     end

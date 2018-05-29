@@ -14,6 +14,15 @@ module Match
       matches_for_predicting
     end
 
+    def prediction(prediction_json)
+      model = DBModels::Prediction.new
+      model.home_score = prediction_json['home_score']
+      model.away_score = prediction_json['away_score']
+      model.match_id = prediction_json['match_id']
+      model.user_id = prediction_json['user_id']
+      model
+    end
+
     # private_class_method :new
     #
     # def MatchesDeserializer.single_match(single_match_json)
