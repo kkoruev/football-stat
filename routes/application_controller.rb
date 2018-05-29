@@ -10,6 +10,8 @@ require_relative '../lib/team/team_serializer'
 require_relative '../lib/user/error_messages'
 require_relative '../lib/exceptions/login_authentication_error'
 
+require_relative '../lib/user/user_functions'
+
 
 module Routes
   # Routes base class that inherits from Sinatra base.

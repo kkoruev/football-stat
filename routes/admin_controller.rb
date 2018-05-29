@@ -35,25 +35,25 @@ module Routes
       matches = DBModels::Match.matches_from_gameweek(gameweek)
       halt 400, no_such_gameweek(gameweek) if matches.empty?
 
-      match{
-        id = 1
-        h_t_n ..
-        ..
-      }
-
-      result{
-        id = 1
-        h_t_s = 1
-        a_t_s = 2
-      }
-
-      prediction{
-        id = 1
-        h_t_s = 1
-        a_t_s = 2
-        user_id = ?
-        match_id = ?
-      }
+      # match{
+      #   id = 1
+      #   h_t_n ..
+      #   ..
+      # }
+      #
+      # result{
+      #   id = 1
+      #   h_t_s = 1
+      #   a_t_s = 2
+      # }
+      #
+      # prediction{
+      #   id = 1
+      #   h_t_s = 1
+      #   a_t_s = 2
+      #   user_id = ?
+      #   match_id = ?
+      # }
 
       # get all predictions based on match_id
       # sum points for all predictions and update user table with summed points

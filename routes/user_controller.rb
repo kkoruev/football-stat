@@ -3,15 +3,17 @@ require_relative "./application_controller"
 module Routes
   class UserController < ApplicationController
     include ErrorMessages
+    include UserFunctions
 
     get '/' do
       "Hello from User!"
     end
 
     post '/register' do
-      request_params = JSON.parse(request.body.read)
+      request_params = parse_params(request.body.read)
+      halt 400, parse_error if request_params.empty?
       user = UserDeserializer.new(request_params).registration_data
-      halt(400, user_exist(user.email)) if user.exists?
+      halt 400, user_exist(user.email) if user.exists?
       begin
         user.save
       rescue DataMapper::SaveFailureError => ex
@@ -20,12 +22,16 @@ module Routes
     end
 
     post '/login' do
-      request_params = JSON.parse(request.body.read)
-      user = UserDeserializer.new(request_params).login_data
-      # begin
-      #   user.authenticate
-      # rescue
-
+      request_params = parse_params(request.body.read)
+      halt 400, parse_error if request_params.empty?
+      user, password = UserDeserializer.new(request_params).login_data
+      halt 400, parse_error if password.nil?
+      begin
+        user = user.authenticate(password)
+      rescue LoginAuthenticationError => ex
+        halt 400, ex.message
+      end
+      "Succeed"
     end
 
     get '/login' do

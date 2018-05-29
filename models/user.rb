@@ -41,6 +41,7 @@ module DBModels
       hashed_pass_to_check = Util::Password.hashed_password(password, user.salt)
       password_match = (user.hashed_pass == hashed_pass_to_check)
       raise LoginAuthenticationError.new(wrong_password) unless password_match
+      user
     end
 
     def register(password)

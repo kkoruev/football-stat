@@ -8,10 +8,10 @@ class UserDeserializer
 
   def registration_data
     salt = Util::Password.generate_salt
-    password = @user_json["password"]
+    password = @user_json['password']
     user = DBModels::User.new
-    user.email = @user_json["email"]
-    user.nickname = @user_json["nickname"]
+    user.email = @user_json['email']
+    user.nickname = @user_json['nickname']
     user.salt = salt
     user.hashed_pass = Util::Password.hashed_password(password, salt)
     user
@@ -19,7 +19,8 @@ class UserDeserializer
 
   def login_data
     user = DBModels::User.new
-    user.email = @user_json["email"]
-    user
+    user.email = @user_json['email']
+    password = @user_json['password']
+    [user, password]
   end
 end
