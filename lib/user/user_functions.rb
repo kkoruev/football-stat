@@ -1,6 +1,15 @@
 require_relative '../utils/password_util'
 
 module UserFunctions
+  def parse_params(request_params)
+    parsed_params = Hash.new
+    begin
+      parsed_params = JSON.parse(request_params)
+    rescue JSON::ParserError => er
+      return Hash.new
+    end
+    return parsed_params
+  end
   # def self.register(full_name, email, password, is_admin = 0)
   #   user = Register.make_user(full_name, email, password, is_admin)
   #   existing_user = Register.user_with_email(email)
