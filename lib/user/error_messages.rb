@@ -23,4 +23,8 @@ module ErrorMessages
   def could_not_delete_matches(gameweek)
     "Could not delete matches from gameweek = #{gameweek}! Chek db conneciton."
   end
+
+  def parse_error
+    "Could not parse data. Check input parameters"
+  end
 end
