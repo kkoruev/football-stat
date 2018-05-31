@@ -1,15 +1,15 @@
 module Match
   class Result
 
-    attr_accessor :home_team, :away_team
+    attr_accessor :home_score, :away_score
 
     def initialize(home, away)
-      @home_team = home.to_s
-      @away_team = away.to_s
+      @home_score = home.to_s
+      @away_score = away.to_s
     end
 
     def empty?
-      return true if @home_team.empty? or @away_team.empty?
+      return true if @home_score.empty? or @away_score.empty?
       return false
     end
 
@@ -24,14 +24,13 @@ module Match
     private
 
     def full_win(result)
-      return @home_team == result.home_team && @away_team == result.away_team
+      return @home_score == result.home_score && @away_score == result.away_score
     end
 
     def half_win(result)
-      current = @home_team.to_i <=> @away_team.to_i
-      other = result.home_team.to_i <=> result.away_team.to_i
+      current = @home_score.to_i <=> @away_score.to_i
+      other = result.home_score.to_i <=> result.away_score.to_i
       return current == other
     end
   end
 end
-

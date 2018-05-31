@@ -31,33 +31,19 @@ module Routes
 
     end
 
-    post '/matches/:gameweek/results' do
-      matches = DBModels::Match.matches_from_gameweek(gameweek)
-      halt 400, no_such_gameweek(gameweek) if matches.empty?
+    post '/matches/:match/results' do |match|
+      request_params = parse_params(request.body.read)
+      halt 400, parse_error if request_params.empty?
 
-      # match{
-      #   id = 1
-      #   h_t_n ..
-      #   ..
-      # }
-      #
-      # result{
-      #   id = 1
-      #   h_t_s = 1
-      #   a_t_s = 2
-      # }
-      #
-      # prediction{
-      #   id = 1
-      #   h_t_s = 1
-      #   a_t_s = 2
-      #   user_id = ?
-      #   match_id = ?
-      # }
+      result = Match::MatchesDeserializer.result(request_params)
+      halt 400, "Result error" if result.empty?
 
-      # get all predictions based on match_id
-      # sum points for all predictions and update user table with summed points
-      # update matches results in the DB
+      all_predictions = DBModels::Predictions.new.matches_by_id(match)
+      halt 400, "No predictions for this match" if all_predictions.empty?
+      # iterate through all predictions and find the result and points
+      all_predictions.each do |prediciton|
+        # prediction.calculate_points(result)
+      end
     end
 
     delete '/matches/:gameweek' do |gameweek|

@@ -39,18 +39,17 @@ module Routes
       Match::MatchesSerializer.new.matches_for_prediction(matches)
     end
 
-    post '/predictions'
-      # prediction_for_match
-      # {
-      #   match_id,
-      #   h_s,
-      #   a_s
-      # }
+    post '/predictions' do
+      user_id = 1
       request_params = parse_params(request.body.read)
       halt 400, parse_error if request_params.empty?
       prediction = Match::MatchesDeserializer.new.prediction(request_params)
-      p prediction
-      "dsad"
+      prediction.user_id = user_id
+      begin
+        prediction.save
+      rescue DataMapper::SaveFailureError => ex
+        halt 400, prediction_save_error
+      end
     end
 
     get '/login' do

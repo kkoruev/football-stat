@@ -27,4 +27,8 @@ module ErrorMessages
   def parse_error
     "Could not parse data. Check input parameters"
   end
+
+  def prediction_save_error
+    "Could not save the prediction. Please check whether home or away score is empty"
+  end
 end

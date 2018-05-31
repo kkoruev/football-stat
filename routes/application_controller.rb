@@ -11,6 +11,7 @@ require_relative '../lib/user/error_messages'
 require_relative '../lib/exceptions/login_authentication_error'
 
 require_relative '../lib/user/user_functions'
+require_relative '../lib/match/result'
 
 
 module Routes

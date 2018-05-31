@@ -19,3 +19,16 @@ registraiton data
 "password": "test",
 "nickname": "kris1"
 }
+
+login data
+{
+"email": "12",
+"password": "212"
+}
+
+predictions
+{
+"home_score": 1,
+"away_score": 2,
+"match_id": 2
+}

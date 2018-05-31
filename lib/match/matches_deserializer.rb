@@ -23,6 +23,13 @@ module Match
       model
     end
 
+    def result(result_json)
+      result = Match::Result.new
+      result.home_score = result_json['home_score']
+      result.away_score = result_json['away_score']
+      result
+    end
+
     # private_class_method :new
     #
     # def MatchesDeserializer.single_match(single_match_json)
