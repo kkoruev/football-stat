@@ -30,6 +30,12 @@ module Match
       result
     end
 
+    def team(team_json)
+      team = DBModels::Team.new
+      team.name = team_json['name']
+      team
+    end
+
     # private_class_method :new
     #
     # def MatchesDeserializer.single_match(single_match_json)

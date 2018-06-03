@@ -3,6 +3,7 @@ require_relative "./application_controller"
 module Routes
   class AdminController < ApplicationController
     include ErrorMessages
+    include UserFunctions
 
     get '/admin' do
       "Hello from Admin!"
@@ -56,13 +57,21 @@ module Routes
       Team::TeamSerializer.new.teams_json(DBModels::Team.all)
     end
 
-    put '/teams/:name' do |name|
-      team = DBModels::Team.new
-      team.name = name
+    post '/teams' do
+      request_params = parse_params(request.body.read)
+      team = Match::MatchesDeserializer.new.team(request_params)
       begin
         team.save
       rescue DataMapper::SaveFailureError => ex
-        halt 400, team_not_saved(name)
+        halt 400, team_not_saved(team.name)
+      end
+    end
+
+    delete '/teams/:team_name' do |team_name|
+      begin
+        DBModels::Team.new.remove_team(team_name)
+      rescue TeamNotFoundError => ex
+        halt 400, ex.message
       end
     end
 

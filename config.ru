@@ -1,4 +1,6 @@
 require 'sinatra/base'
+require 'sinatra/cors'
+
 require 'rubygems'
 require 'data_mapper'
 require 'dm-noisy-failures'

@@ -1,0 +1,2 @@
+class TeamNotFoundError < StandardError
+end

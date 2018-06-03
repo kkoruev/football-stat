@@ -8,7 +8,9 @@ require_relative '../lib/match/matches_serializer'
 require_relative '../lib/team/team_serializer'
 
 require_relative '../lib/user/error_messages'
+
 require_relative '../lib/exceptions/login_authentication_error'
+require_relative '../lib/exceptions/team_not_found_error'
 
 require_relative '../lib/user/user_functions'
 require_relative '../lib/match/result'
@@ -18,6 +20,7 @@ module Routes
   # Routes base class that inherits from Sinatra base.
   class ApplicationController < Sinatra::Base
     use Rack::MethodOverride
+
     not_found do
       'This page does not exists!'
     end

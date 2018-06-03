@@ -31,7 +31,6 @@ module Routes
       rescue LoginAuthenticationError => ex
         halt 400, ex.message
       end
-      "Succeed"
     end
 
     get '/matches' do
