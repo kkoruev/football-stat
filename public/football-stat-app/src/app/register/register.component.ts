@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { User } from '../user'
+import { User } from '../types/user';
 
-import { UserService } from '../user.service'
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +11,11 @@ import { UserService } from '../user.service'
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+
+  data: any;
+
   constructor(
+    private router: Router,
     private userService: UserService
   ) { }
 
@@ -18,17 +23,20 @@ export class RegisterComponent implements OnInit {
   }
 
   register(email: string, nickname: string, password: string): void {
-    var data1;
-    var error1;
 
     this.userService.register({email, nickname,  password} as User)
       .subscribe(
-        data => data1 = data,
-        error => error1 = error
+        data => {
+          this.data = 'success';
+          console.log(this.data);
+        },
+        error => {
+          console.log(error);
+          if (error.status === 200) {
+            this.router.navigate(['/login']);
+          }
+        }
       );
-        
-    console.log(data1)
-    console.log(error1)
   }
 
 }

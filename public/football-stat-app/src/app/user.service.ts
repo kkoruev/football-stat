@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
-import { User } from './user'
+import { User } from './types/user';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -37,9 +37,6 @@ export class UserService {
 
   register(user: User): Observable<any> {
     return this.http.post(this.registerUrl, user)
-      // .pipe(
-      //   catchError(this.handleError)
-      // )
   }
   
 

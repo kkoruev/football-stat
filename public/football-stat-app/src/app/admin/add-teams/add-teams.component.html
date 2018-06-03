@@ -1,0 +1,24 @@
+<p>
+  add-teams works!
+</p>
+
+<div class="row">
+ <div class="col-sm-3"></div>
+ <label for="teamInput" >Team name: </label>
+ <input id="teamInput" [(ngModel)]="newTeam">
+ <button (click)="saveTeam(newTeam)">Add</button>
+</div>
+
+<div>
+    <ul *ngFor="let team of teams">
+      <div class="col-sm-6">
+        <li >{{ team.name }}</li>
+      </div>
+
+      <div class="col-sm-6">
+        <a href="#">
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
+      </div>
+    </ul>
+</div>

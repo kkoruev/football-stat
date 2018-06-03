@@ -1,15 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AdminModule } from './admin/admin.module';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { AppRoutingModule } from './/app-routing.module';
 import { RegisterComponent } from './register/register.component';
 
-import { UserService } from './user.service'
-
-import { HttpClientModule } from '@angular/common/http';
+import { UserService } from './user.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AdminModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
