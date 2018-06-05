@@ -19,16 +19,16 @@ export class AddTeamsService {
     private http: HttpClient,
   ) { }
 
-    getTeams() {
-      return this.http.get<Team[]>(this.apiUrl + 'admin/teams');
-    }
+  getTeams() {
+    return this.http.get<Team[]>(this.apiUrl + 'admin/teams');
+  }
 
-    createTeam(teamName: string) {
-      return this.http.post(this.apiUrl + 'admin/teams', {name: teamName});
-    }
+  createTeam(teamName: string) {
+    return this.http.post(this.apiUrl + 'admin/teams', {name: teamName});
+  }
 
-    removeTeam(teamName: string){
-
-    }
+  removeTeam(teamName: string){
+    return this.http.delete(this.apiUrl + 'admin/teams/' + teamName);
+  }
 
 }

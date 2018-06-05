@@ -2,6 +2,10 @@
   add-teams works!
 </p>
 
+<div *ngIf="data">
+  {{data}}
+</div>
+
 <div class="row">
  <div class="col-sm-3"></div>
  <label for="teamInput" >Team name: </label>
@@ -16,9 +20,9 @@
       </div>
 
       <div class="col-sm-6">
-        <a href="#">
+        <button (click)="removeTeam(team.name)">
           <span class="glyphicon glyphicon-remove"></span>
-        </a>
+        </button>
       </div>
     </ul>
 </div>

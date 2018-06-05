@@ -13,7 +13,7 @@ export class AddTeamsComponent implements OnInit {
 
   teams: Team[];
   newTeam = '';
-
+  data = '';
   constructor(private addTeamsService: AddTeamsService) { }
 
   ngOnInit() {
@@ -30,6 +30,7 @@ export class AddTeamsComponent implements OnInit {
   }
 
   saveTeam(teamName: string) {
+    this.data = ''
     this.addTeamsService.createTeam(teamName).subscribe(response => {
       this.newTeam = '';
       this.getData();
@@ -38,8 +39,16 @@ export class AddTeamsComponent implements OnInit {
         this.newTeam = '';
         this.getData();
       } else {
-        console.log(error.error)
+        this.data = error.error
       }
+    });
+  }
+
+  removeTeam(teamName: string) {
+    this.addTeamsService.removeTeam(teamName).subscribe(response => {
+      this.getData();
+    }, error => {
+
     });
   }
 }
