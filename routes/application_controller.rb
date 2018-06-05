@@ -30,7 +30,8 @@ module Routes
     end
 
     options '*' do
-      response.headers['Allow'] = 'GET, POST, OPTIONS, PUT, DELETE'
+      response.headers['Allow'] = 'GET, POST, DELETE, OPTIONS, PUT'
+      response.headers['Access-Control-Allow-Methods'] = 'GET, POST, DELETE, OPTIONS, PUT'
       response.headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type, Accept, X-User-Email, X-Auth-Token'
       response.headers['Access-Control-Allow-Origin'] = '*'
       200
