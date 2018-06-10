@@ -1,7 +1,7 @@
 module Match
   class MatchesDeserializer
     def matches_for_predicting(matches_json)
-      matches_for_predicting = Array.new
+      matches_for_predicting = []
 
       matches_json.map do |match|
         model = DBModels::Match.new
@@ -12,6 +12,15 @@ module Match
         matches_for_predicting.push(model)
       end
       matches_for_predicting
+    end
+
+    def match_for_prediction(match_json)
+      model = DBModels::Match.new
+      model.home_team = match_json['home_team']
+      model.away_team = match_json['away_team']
+      model.date = match_json['date']
+      model.gameweek = match_json['gameweek']
+      model
     end
 
     def prediction(prediction_json)

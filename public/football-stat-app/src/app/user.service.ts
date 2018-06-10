@@ -38,7 +38,7 @@ export class UserService {
   register(user: User): Observable<any> {
     return this.http.post(this.registerUrl, user)
   }
-  
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

@@ -9,15 +9,25 @@ module Routes
       "Hello from Admin!"
     end
 
+    # post '/matches' do
+    #   request_params = JSON.parse(request.body.read)
+    #   matches = Match::MatchesDeserializer.new.matches_for_predicting(request_params)
+    #   matches.each do |match|
+    #     begin
+    #       match.save
+    #     rescue DataMapper::SaveFailureError => ex
+    #       halt 400, match_not_saved(match)
+    #     end
+    #   end
+    # end
+
     post '/matches' do
       request_params = JSON.parse(request.body.read)
-      matches = Match::MatchesDeserializer.new.matches_for_predicting(request_params)
-      matches.each do |match|
-        begin
-          match.save
-        rescue DataMapper::SaveFailureError => ex
-          halt 400, match_not_saved(match)
-        end
+      match = Match::MatchesDeserializer.new.match_for_prediction(request_params)
+      begin
+        match.save
+      rescue DataMapper::SaveFailureError => ex
+        halt 400, match_not_saved(match)
       end
     end
 

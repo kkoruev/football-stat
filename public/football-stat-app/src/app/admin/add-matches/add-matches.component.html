@@ -1,0 +1,42 @@
+<p>
+  add-matches works!
+</p>
+
+<div *ngFor="let number of matches_iteration">
+  <div class="matches">
+    <div class="col-sm-2">
+      <label> Gameweek: </label>
+      <input [(ngModel)]="gameweekes[number]" type="text" style="width: 60px"/>
+    </div>
+
+    <div class="col-sm-2">
+      <label> Date: </label>
+      <input [(ngModel)]="dates[number]" type="text" style="width: 100px"/>
+    </div>
+
+    <div class="col-sm-2">
+      <select [(ngModel)]="home_teams[number]" >
+        <option *ngFor="let team of teams" [ngValue]="team.name"> {{team.name}} </option>
+      </select>
+    </div>
+
+    <div class="col-sm-1">
+      VS
+    </div>
+
+    <div class="col-sm-2">
+      <select [(ngModel)]="away_teams[number]" >
+        <option *ngFor="let team of teams" [ngValue]="team.name"> {{team.name}} </option>
+      </select>
+    </div>
+    <div class="col-sm-2">
+     <button (click)="submitMatch(number)">Submit match</button>
+    </div>
+  </div>
+  <br>
+  <br>
+</div>
+
+<div class="col-sm-4">
+ <button (click)="addMatch()">Add new match</button>
+</div>

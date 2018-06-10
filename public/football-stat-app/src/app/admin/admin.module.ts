@@ -9,6 +9,8 @@ import { AddTeamsService } from './add-teams/add-teams.service';
 
 import { AddTeamsComponent } from './add-teams/add-teams.component';
 import { AdminComponent } from './admin.component';
+import { AddMatchesComponent } from './add-matches/add-matches.component';
+import { AddMatchesService } from "./add-matches/add-matches.service";
 
 @NgModule({
   imports: [
@@ -17,9 +19,10 @@ import { AdminComponent } from './admin.component';
     AdminRoutingModule,
     FormsModule
   ],
-  declarations: [AddTeamsComponent, AdminComponent],
+  declarations: [AddTeamsComponent, AdminComponent, AddMatchesComponent],
   providers: [
-    AddTeamsService
+    AddTeamsService,
+    AddMatchesService
   ]
 })
 export class AdminModule { }
