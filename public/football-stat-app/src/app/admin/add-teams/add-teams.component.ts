@@ -45,10 +45,15 @@ export class AddTeamsComponent implements OnInit {
   }
 
   removeTeam(teamName: string) {
-    this.addTeamsService.removeTeam(teamName).subscribe(response => {
-      this.getData();
-    }, error => {
-
-    });
+    this.addTeamsService.removeTeam(teamName).subscribe(
+      response => {
+        this.getData();
+      }, error => {
+        if(error.status === 200) {
+          this.getData();
+        } else {
+          this.data = error.error
+        }
+      });
   }
 }
