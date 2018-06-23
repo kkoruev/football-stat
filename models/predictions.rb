@@ -9,12 +9,16 @@ module DBModels
     property :away_score,     Integer, :required => true
     property :done,           Boolean, :default => false
 
-    def self.predictions_by_user(id)
-      all(:user_id => id, done => false)
+    def current_predictions_by_user(id)
+      DBModels::Prediction.all(:user_id => id, :done => false)
     end
 
     def matches_by_id(match_id)
-      DBModels.Predictions.all(:match_id => match_id)
+      DBModels::Prediction.all(:match_id => match_id)
+    end
+
+    def predicted_matches(user_id)
+      DBModels::Prediction.all(:user_id => user_id, :done => false)
     end
 
     def calculate_points(result)

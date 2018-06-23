@@ -34,12 +34,25 @@ module Routes
     end
 
     get '/matches' do
+      user_id = 2
       matches = DBModels::Match.new.current
-      Match::MatchesSerializer.new.matches_for_prediction(matches)
+      predictions = DBModels::Prediction.new.current_predictions_by_user(user_id)
+      current_matches = []
+      # TODO: MOVE IT TO FUNCTION!
+      matches.each do |match|
+        found = false
+        predictions.each do |prediction|
+          found = match.id == prediction.match_id
+          break if found
+        end
+        current_matches.push(match) unless found
+      end
+
+      Match::MatchesSerializer.new.matches_for_prediction(current_matches)
     end
 
     post '/predictions' do
-      user_id = 1
+      user_id = 2
       request_params = parse_params(request.body.read)
       halt 400, parse_error if request_params.empty?
       prediction = Match::MatchesDeserializer.new.prediction(request_params)
@@ -49,6 +62,13 @@ module Routes
       rescue DataMapper::SaveFailureError => ex
         halt 400, prediction_save_error
       end
+    end
+
+    get '/predictions' do
+      user_id = 2
+      # TODO: Should make session based on cookies
+      predictions = DBModels::Prediction.new.predicted_matches(user_id)
+      Match::MatchesSerializer.new.predictions(predictions)
     end
 
     get '/login' do
@@ -63,10 +83,9 @@ module Routes
     end
 
     get '/test' do
-      user = DBModels::User.new
-      user.email = "lok"
-      user = user.authenticate("2")
-      "YOU ARE LOGGED IN"
+      match = DBModels::Match.new.match_by_id(3)
+      p match
+      "Here"
     end
 
   end

@@ -32,3 +32,21 @@ predictions
 "away_score": 2,
 "match_id": 2
 }
+
+
+
+############################### SQL QUERIES ############33
+SELECT * FROM football_stat.matches;
+
+SELECT * FROM football_stat.users;
+
+Select *
+from football_stat.matches m
+inner join football_stat.predictions p
+on m.id = p.match_id
+where p.done = 0;
+
+Select *
+from football_stat.matches m
+left join football_stat.predictions p
+on m.id = p.match_id

@@ -21,5 +21,9 @@ module DBModels
     def matches_from_gameweek(gameweek)
       DBModels::Match.all(:gameweek => gameweek)
     end
+
+    def match_by_id(match_id)
+      DBModels::Match.first(:id => match_id)
+    end
   end
 end
