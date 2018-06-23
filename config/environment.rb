@@ -1,3 +1,5 @@
+require_relative '../lib/match/result'
+
 module Config
   class Environment
     def setup(is_migration)

@@ -14,7 +14,7 @@ module DBModels
     end
 
     def matches_by_id(match_id)
-      DBModels::Prediction.all(:match_id => match_id)
+      DBModels::Prediction.all(:match_id => match_id, :done => false)
     end
 
     def predicted_matches(user_id)
@@ -22,9 +22,24 @@ module DBModels
     end
 
     def calculate_points(result)
-      #compare results and get the points
-      #update_user_points
-      #update_matches
+      points = check_prediction(result)
+      update_user_points(points)
+      self.update(:done => true)
+    end
+
+    private
+
+    def update_user_points(points)
+      DBModels::User.new.user(self.user_id).update_points(points)
+    end
+
+    def check_prediction(result)
+      prediction_result = convert_to_result
+      result.compare(prediction_result)
+    end
+
+    def convert_to_result
+      ::Match::Result.new(self.home_score, self.away_score)
     end
   end
 end

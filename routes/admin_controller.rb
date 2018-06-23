@@ -9,18 +9,6 @@ module Routes
       "Hello from Admin!"
     end
 
-    # post '/matches' do
-    #   request_params = JSON.parse(request.body.read)
-    #   matches = Match::MatchesDeserializer.new.matches_for_predicting(request_params)
-    #   matches.each do |match|
-    #     begin
-    #       match.save
-    #     rescue DataMapper::SaveFailureError => ex
-    #       halt 400, match_not_saved(match)
-    #     end
-    #   end
-    # end
-
     post '/matches' do
       request_params = JSON.parse(request.body.read)
       match = Match::MatchesDeserializer.new.match_for_prediction(request_params)
@@ -46,15 +34,20 @@ module Routes
       request_params = parse_params(request.body.read)
       halt 400, parse_error if request_params.empty?
 
-      result = Match::MatchesDeserializer.result(request_params)
+      result = Match::MatchesDeserializer.new.result(request_params)
       halt 400, "Result error" if result.empty?
 
-      all_predictions = DBModels::Predictions.new.matches_by_id(match)
+      all_predictions = DBModels::Prediction.new.matches_by_id(match)
       halt 400, "No predictions for this match" if all_predictions.empty?
       # iterate through all predictions and find the result and points
-      all_predictions.each do |prediciton|
-        # prediction.calculate_points(result)
+      all_predictions.each do |prediction|
+        prediction.calculate_points(result)
       end
+
+      id = match
+      home_score = result.home_score
+      away_score = result.away_score
+      DBModels::Match.new.match_by_id(id).update_score(home_score, away_score)
     end
 
     delete '/matches/:gameweek' do |gameweek|

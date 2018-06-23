@@ -18,6 +18,15 @@ module DBModels
 
     has n, :predictions
 
+    def user(id)
+      DBModels::User.first(:id => id)
+    end
+
+    def update_points(points)
+      points = self.points + points
+      self.update(:points => points)
+    end
+
     def exists?
       DBModels::User.count(:email => self.email) > 0
     end

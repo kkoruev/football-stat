@@ -25,5 +25,9 @@ module DBModels
     def match_by_id(match_id)
       DBModels::Match.first(:id => match_id)
     end
+
+    def update_score(home_score, away_score)
+      self.update(:home_score => home_score, :away_score => away_score)
+    end
   end
 end
