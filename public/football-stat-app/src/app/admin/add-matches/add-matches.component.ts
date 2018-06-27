@@ -15,48 +15,41 @@ declare var $ :any;
 export class AddMatchesComponent implements OnInit {
 
   teams: Team[];
-  matches: any;
-  matches_iteration = [];
-  home_teams = [];
-  away_teams = [];
-  gameweekes = [];
-  dates = [];
+
+  match: Match = {
+    home_team: "",
+    away_team: "",
+    date: "",
+    gameweek: ""
+  };
+
+  matches: Match[];
 
   constructor(private addTeamsService: AddTeamsService,
               private addMatchService: AddMatchesService) { }
 
   ngOnInit() {
     this.getTeams();
-    this.matches = 0;
-    console.log(this.matches)
-    this.refreshMatches();
+    this.getMatches();
   }
 
-  addMatch() {
-    this.matches+=1;
-    this.refreshMatches();
+  refreshMatch() {
+    this.match = {
+      home_team: "",
+      away_team: "",
+      date: "",
+      gameweek: ""
+    };
   }
 
-  refreshMatches() {
-    this.matches_iteration = Array.apply(null,  {
-      length: this.matches
-    }).map(Number.call, Number);
-  }
-
-  submitMatch(match_row: number) {
-    var home_team = this.home_teams[match_row]
-    var away_team = this.away_teams[match_row]
-    var gameweek = this.gameweekes[match_row]
-    var date = this.dates[match_row]
-    this.addMatchService.submitMatch({home_team, away_team, gameweek, date} as Match)
+  submitMatch() {
+    this.addMatchService.submitMatch(this.match)
                         .subscribe(response => {
-                            this.matches-=1;
-                            this.matches_iteration.splice(match_row, 1);
+
                           }, error => {
                             if (error.status === 200) {
+                              this.getMatches();
                               console.log("SUccess")
-                              this.matches-=1;
-                              this.matches_iteration.splice(match_row, 1);
                             } else {
                               console.log("failure")
                             }
@@ -64,18 +57,20 @@ export class AddMatchesComponent implements OnInit {
                           });
   }
 
-  // removeMatch() {
-  //   this.matches-=1;
-  //   this.matches_iteration = Array.apply(null,  {
-  //     length: this.matches
-  //   }).map(Number.call, Number);
-  // }
-
   getTeams() {
     this.addTeamsService.getTeams().subscribe(
       response => {
         this.teams = response;
         console.log(this.teams);
+      }
+    );
+  }
+
+  getMatches() {
+    this.addMatchService.getMatches().subscribe(
+      response => {
+        this.matches = response;
+        console.log(this.matches);
       }
     );
   }

@@ -2,41 +2,64 @@
   add-matches works!
 </p>
 
-<div *ngFor="let number of matches_iteration">
-  <div class="matches">
-    <div class="col-sm-2">
-      <label> Gameweek: </label>
-      <input [(ngModel)]="gameweekes[number]" type="text" style="width: 60px"/>
-    </div>
 
-    <div class="col-sm-2">
-      <label> Date: </label>
-      <input [(ngModel)]="dates[number]" type="text" style="width: 100px"/>
-    </div>
+<h1> Add new match </h1>
+<br>
+<div class="match">
+  <div class="col-md-2">
+    <label> Gameweek: </label>
+    <input [(ngModel)]="match.gameweek" type="text" style="width: 60px"/>
+  </div>
 
-    <div class="col-sm-2">
-      <select [(ngModel)]="home_teams[number]" >
-        <option *ngFor="let team of teams" [ngValue]="team.name"> {{team.name}} </option>
-      </select>
-    </div>
+  <div class="col-md-2">
+    <label> Date: </label>
+    <input [(ngModel)]="match.date" type="text" style="width: 100px"/>
+  </div>
 
-    <div class="col-sm-1">
-      VS
-    </div>
+  <div class="col-md-2">
+    <select [(ngModel)]="match.home_team" >
+      <option *ngFor="let team of teams" [ngValue]="team.name"> {{team.name}} </option>
+    </select>
+  </div>
 
-    <div class="col-sm-2">
-      <select [(ngModel)]="away_teams[number]" >
-        <option *ngFor="let team of teams" [ngValue]="team.name"> {{team.name}} </option>
-      </select>
-    </div>
-    <div class="col-sm-2">
-     <button (click)="submitMatch(number)">Submit match</button>
-    </div>
+  <div class="col-md-1">
+    VS
+  </div>
+
+  <div class="col-md-2">
+    <select [(ngModel)]="match.away_team" >
+      <option *ngFor="let team of teams" [ngValue]="team.name"> {{team.name}} </option>
+    </select>
+  </div>
+
+  <div class="col-md-3">
+   <button (click)="submitMatch()">Submit match</button>
+  </div>
+</div>
+
+<br>
+<h1> Added matches for predictions </h1>
+
+<div *ngFor="let m of matches">
+  <div class="col-md-1">
+    <label> {{m.gameweek}} </label>
+  </div>
+
+  <div class="col-md-2">
+    <label> {{m.date}} </label>
+  </div>
+
+  <div class="col-md-2">
+    <label> {{m.home_team}} </label>
+  </div>
+
+  <div class="col-md-2">
+    VS
+  </div>
+
+  <div class="col-md-2">
+    <label> {{m.away_team}} </label>
   </div>
   <br>
   <br>
-</div>
-
-<div class="col-sm-4">
- <button (click)="addMatch()">Add new match</button>
 </div>

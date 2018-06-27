@@ -20,4 +20,8 @@ export class AddMatchesService {
   submitMatch(match: Match) {
     return this.http.post(this.apiUrl + 'admin/matches', match);
   }
+
+  getMatches() {
+    return this.http.get<Match[]>(this.apiUrl + 'admin/matches');
+  }
 }
