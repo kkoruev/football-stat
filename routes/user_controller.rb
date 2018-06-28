@@ -5,8 +5,9 @@ module Routes
     include ErrorMessages
     include UserFunctions
 
-    get '/' do
-      "Hello from User!"
+    get '/logged' do
+      halt 400, "Session has expired" if session['user_email'].nil?
+      "User is logged"
     end
 
     post '/register' do
@@ -28,6 +29,7 @@ module Routes
       halt 400, parse_error if password.nil?
       begin
         user = user.authenticate(password)
+        session['user_email'] = user.email
       rescue LoginAuthenticationError => ex
         halt 400, ex.message
       end

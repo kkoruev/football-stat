@@ -20,6 +20,8 @@ module Routes
   # Routes base class that inherits from Sinatra base.
   class ApplicationController < Sinatra::Base
     use Rack::MethodOverride
+    enable :sessions
+    set :session_secret, "SECRET123"
 
     not_found do
       'This page does not exists!'
