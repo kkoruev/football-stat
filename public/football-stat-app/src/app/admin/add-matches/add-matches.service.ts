@@ -24,4 +24,8 @@ export class AddMatchesService {
   getMatches() {
     return this.http.get<Match[]>(this.apiUrl + 'admin/matches');
   }
+
+  getUserMatches(userId) {
+    return this.http.get<Match[]>(this.apiUrl + "/matches");
+  }
 }

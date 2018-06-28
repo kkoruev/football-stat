@@ -12,12 +12,15 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
 import { UserService } from './user.service';
+import { PredictionsComponent } from './predictions/predictions.component';
+import { AddMatchesService } from "./admin/add-matches/add-matches.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PredictionsComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,7 @@ import { UserService } from './user.service';
     HttpClientModule,
     AdminModule
   ],
-  providers: [UserService],
+  providers: [UserService, AddMatchesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

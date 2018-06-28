@@ -1,0 +1,36 @@
+<p>
+  predictions works!
+</p>
+
+<div *ngIf="error">
+  {{error}}
+</div>
+
+
+<div *ngFor="let m of matches">
+  <div class="col-md-1">
+    <label> {{m.gameweek}} </label>
+  </div>
+
+  <div class="col-md-1">
+    <label> {{m.date}} </label>
+  </div>
+
+  <div class="col-md-3">
+    <label> {{m.home_team}} </label>
+      <input #home_team type=number style="width: 100px">
+  </div>
+
+  <div class="col-md-1">
+    VS
+  </div>
+
+  <div class="col-md-3">
+    <label> {{m.away_team}} </label>
+    <input #away_team type=number style="width: 100px">
+  </div>
+
+  <div class="col-md-3">
+   <button (click)="submitResult(m.id, home_team.value, away_team.value)">Submit result</button>
+  </div>
+</div>

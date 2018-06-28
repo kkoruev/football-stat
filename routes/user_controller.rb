@@ -34,7 +34,7 @@ module Routes
     end
 
     get '/matches' do
-      user_id = 2
+      user_id = 16
       matches = DBModels::Match.new.current
       predictions = DBModels::Prediction.new.current_predictions_by_user(user_id)
       current_matches = []

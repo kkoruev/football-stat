@@ -30,7 +30,9 @@ module DBModels
     private
 
     def update_user_points(points)
-      DBModels::User.new.user(self.user_id).update_points(points)
+      user = DBModels::User.new.user(self.user_id)
+      return if user.nil?
+      user.update_points(points)
     end
 
     def check_prediction(result)
