@@ -30,6 +30,7 @@ module Routes
 
     end
 
+    ## TODO: Failing when trying to update user points - fix it
     post '/matches/:match/results' do |match|
       request_params = parse_params(request.body.read)
       halt 400, parse_error if request_params.empty?
@@ -38,7 +39,6 @@ module Routes
       halt 400, "Result error" if result.empty?
 
       all_predictions = DBModels::Prediction.new.matches_by_id(match)
-      halt 400, "No predictions for this match" if all_predictions.empty?
       # iterate through all predictions and find the result and points
       all_predictions.each do |prediction|
         prediction.calculate_points(result)
