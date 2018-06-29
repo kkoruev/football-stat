@@ -14,13 +14,17 @@ import { RegisterComponent } from './register/register.component';
 import { UserService } from './user.service';
 import { PredictionsComponent } from './predictions/predictions.component';
 import { AddMatchesService } from "./admin/add-matches/add-matches.service";
+import { SharedModule } from "./shared/shared.module";
+import { SessionExpiredComponent } from './session-expired/session-expired.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    PredictionsComponent
+    PredictionsComponent,
+    SessionExpiredComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +32,8 @@ import { AddMatchesService } from "./admin/add-matches/add-matches.service";
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    AdminModule
+    AdminModule,
+    SharedModule.forRoot({token: ''})
   ],
   providers: [UserService, AddMatchesService],
   bootstrap: [AppComponent]

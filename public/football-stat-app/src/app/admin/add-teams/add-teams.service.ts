@@ -19,16 +19,25 @@ export class AddTeamsService {
     private http: HttpClient,
   ) { }
 
-  getTeams() {
-    return this.http.get<Team[]>(this.apiUrl + 'admin/teams');
+  getTeams(token) {
+    var headers = new HttpHeaders();
+    headers = headers.set('X-Auth-Token', token);
+    return this.http.get<Team[]>(this.apiUrl + 'admin/teams',
+                      {observe: 'response', headers: headers});
   }
 
-  createTeam(teamName: string) {
-    return this.http.post(this.apiUrl + 'admin/teams', {name: teamName});
+  createTeam(teamName: string, token) {
+    var headers = new HttpHeaders();
+    headers = headers.set('X-Auth-Token', token);
+    return this.http.post(this.apiUrl + 'admin/teams', {name: teamName},
+                      {observe: 'response', headers: headers});
   }
 
-  removeTeam(teamName: string){
-    return this.http.delete(this.apiUrl + 'admin/teams/' + teamName);
+  removeTeam(teamName: string, token){
+    var headers = new HttpHeaders();
+    headers = headers.set('X-Auth-Token', token);
+    return this.http.delete(this.apiUrl + 'admin/teams/' + teamName,
+                      {observe: 'response', headers: headers});
   }
 
 }

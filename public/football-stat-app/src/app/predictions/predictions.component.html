@@ -1,10 +1,15 @@
-<p>
-  predictions works!
-</p>
+<ol class="breadcrumb">
+  <li><a href="#">Predict matches</a></li>
+  <li><a href="#">Standing</a></li>
+  <li><a href="#">Statistics</a></li>
+  <li><a href="#">Log out</a></li>
+</ol>
 
 <div *ngIf="error">
   {{error}}
 </div>
+
+<p> {{logged}} </p>
 
 
 <div *ngFor="let m of matches">

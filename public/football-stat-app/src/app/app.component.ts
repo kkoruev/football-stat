@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from "./user.service";
 
 @Component({
   selector: 'app-root',
@@ -7,11 +8,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
-  isLogged: boolean;
-  isAdmin: boolean;
-
-  constructor() {
-    this.isAdmin = false;
-    this.isLogged = false;
-  }
 }

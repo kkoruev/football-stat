@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AddTeamsService } from './add-teams.service';
 
 import { Team } from '../../types/team';
+import { SharedTokenService } from "../../shared/shared-token.service";
 
 @Component({
   selector: 'app-add-teams',
@@ -14,28 +15,35 @@ export class AddTeamsComponent implements OnInit {
   teams: Team[];
   newTeam = '';
   data = '';
-  constructor(private addTeamsService: AddTeamsService) { }
+  constructor(private addTeamsService: AddTeamsService,
+              private sharedTokenService: SharedTokenService) { }
 
   ngOnInit() {
     this.getData();
   }
 
   getData() {
-    this.addTeamsService.getTeams().subscribe(
+    this.addTeamsService.getTeams(this.sharedTokenService.getToken()).subscribe(
       response => {
-        this.teams = response;
+        this.teams = response.body;
+        this.sharedTokenService.setToken(response.headers.get('X-Auth-Token'))
         console.log(this.teams);
+      }, error => {
+
       }
     );
   }
 
   saveTeam(teamName: string) {
     this.data = ''
-    this.addTeamsService.createTeam(teamName).subscribe(response => {
+    this.addTeamsService.createTeam(teamName, this.sharedTokenService.getToken())
+    .subscribe(response => {
+      this.sharedTokenService.setToken(response.headers.get('X-Auth-Token'))
       this.newTeam = '';
       this.getData();
     }, error => {
       if (error.status === 200) {
+        this.sharedTokenService.setToken(error.headers.get('X-Auth-Token'))
         this.newTeam = '';
         this.getData();
       } else {
@@ -45,11 +53,14 @@ export class AddTeamsComponent implements OnInit {
   }
 
   removeTeam(teamName: string) {
-    this.addTeamsService.removeTeam(teamName).subscribe(
+    this.addTeamsService.removeTeam(teamName, this.sharedTokenService.getToken())
+    .subscribe(
       response => {
+        this.sharedTokenService.setToken(response.headers.get('X-Auth-Token'))
         this.getData();
       }, error => {
         if(error.status === 200) {
+          this.sharedTokenService.setToken(error.headers.get('X-Auth-Token'))
           this.getData();
         } else {
           this.data = error.error

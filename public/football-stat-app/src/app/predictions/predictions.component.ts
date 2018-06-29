@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Match } from '../types/match';
 import { AddMatchesService } from "../admin/add-matches/add-matches.service";
+import { UserService } from "../user.service";
+import { ActivatedRoute } from "@angular/router";
+import { SharedTokenService } from "../shared/shared-token.service";
 
 
 @Component({
@@ -11,22 +14,26 @@ import { AddMatchesService } from "../admin/add-matches/add-matches.service";
 export class PredictionsComponent implements OnInit {
 
   matches: Match[];
-  userId: string;
 
-  constructor(private addMatchService: AddMatchesService) { }
+  constructor(private addMatchService: AddMatchesService,
+              private userService: UserService,
+              private route: ActivatedRoute,
+              private sharedTokenSerice: SharedTokenService) { }
 
   ngOnInit() {
     this.getMatches();
-    this.userId = '16';
   }
 
+
   getMatches() {
-    this.addMatchService.getUserMatches(this.userId).subscribe(
+    this.addMatchService.getUserMatches(this.sharedTokenSerice.getToken())
+    .subscribe(
       response => {
-        this.matches = response;
-        console.log(this.matches);
+        this.sharedTokenSerice.setToken(response.headers.get('X-Auth-Token'));
+        this.matches = response.body;
+      }, errpr => {
+        console.log("Hros")
       }
     );
   }
-
 }

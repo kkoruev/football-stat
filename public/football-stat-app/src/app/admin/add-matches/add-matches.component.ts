@@ -3,6 +3,7 @@ import { Team } from "../../types/team";
 import { AddTeamsService } from "../add-teams/add-teams.service";
 import { AddMatchesService } from "./add-matches.service";
 import { Match } from "../../types/match";
+import { SharedTokenService } from "../../shared/shared-token.service";
 
 declare var jquery:any;
 declare var $ :any;
@@ -26,7 +27,8 @@ export class AddMatchesComponent implements OnInit {
   matches: Match[];
 
   constructor(private addTeamsService: AddTeamsService,
-              private addMatchService: AddMatchesService) { }
+              private addMatchService: AddMatchesService,
+              private sharedTokenService: SharedTokenService) { }
 
   ngOnInit() {
     this.getTeams();

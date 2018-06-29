@@ -9,6 +9,7 @@ import { of } from 'rxjs/observable/of';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 import { User } from './types/user';
+import { Session } from "./types/session";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -28,8 +29,8 @@ export class UserService {
   ) { }
 
   login(email: string, password: string): Observable<any> {
-    var params = new HttpParams().set('email', email).set('password', password);
-    return this.http.post(this.loginUrl, params);
+    var user = {email: email, password: password};
+    return this.http.post(this.loginUrl, user, {observe: 'response'});
   }
 
   register(user: User): Observable<any> {
