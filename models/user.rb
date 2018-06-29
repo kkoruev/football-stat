@@ -31,6 +31,15 @@ module DBModels
       DBModels::User.count(:email => self.email) > 0
     end
 
+    def user_role_text
+      return 'U' if role == 0
+      return 'A' if role == 1
+    end
+
+    def admin?
+      return self.role == 1
+    end
+
     def create_default_admin
       admin = DBModels::User.first(:email => 'admin1@football_stat.com')
       return true unless admin.nil?
@@ -39,7 +48,8 @@ module DBModels
       DBModels::User.create(:nickname => 'admin',
                             :email => 'admin1@football_stat.com',
                             :hashed_pass => hashed_password,
-                            :salt => salt)
+                            :salt => salt,
+                            :role => 1)
     end
 
     def authenticate(password)
