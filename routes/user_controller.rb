@@ -5,11 +5,6 @@ module Routes
     include ErrorMessages
     include UserFunctions
 
-    get '/logged' do
-      halt 400, "Session has expired" if session['user_email'].nil?
-      "User is logged"
-    end
-
     post '/register' do
       request_params = parse_params(request.body.read)
       halt 400, parse_error if request_params.empty?
@@ -27,18 +22,37 @@ module Routes
       halt 400, parse_error if request_params.empty?
       user, password = UserDeserializer.new(request_params).login_data
       halt 400, parse_error if password.nil?
+
       begin
         user = user.authenticate(password)
-        session['user_email'] = user.email
+        p user.role
+        session = DBModels::Session.new.user_session(user.email)
+        token = session.update_token unless session.nil?
+        response.headers['X-Auth-Token'] = token unless token.nil?
+        halt 200, user.user_role_text unless token.nil?
+
+        token = DBModels::Session.new.generate_token(user.email, user.id)
+        response.headers['X-Auth-Token'] = token
+        halt 200, user.user_role_text
       rescue LoginAuthenticationError => ex
         halt 400, ex.message
       end
     end
 
     get '/matches' do
-      user_id = 16
+      token = request_headers['x_auth_token']
+      halt 400, "Provide token" if token.nil?
+      halt 400, "Session expired" if DBModels::Session.new.expired?(token)
+
+      session = DBModels::Session.new.session(token)
+      halt 400, "Wrong token" if session.nil?
+
+      id = session.user_id
+      user = DBModels::User.new.user(id)
+      halt 400, "Admin can not open this page" if user.admin?
+
       matches = DBModels::Match.new.current
-      predictions = DBModels::Prediction.new.current_predictions_by_user(user_id)
+      predictions = DBModels::Prediction.new.current_predictions_by_user(id)
       current_matches = []
       # TODO: MOVE IT TO FUNCTION!
       matches.each do |match|
@@ -50,6 +64,7 @@ module Routes
         current_matches.push(match) unless found
       end
 
+      response.headers['X-Auth-Token'] = session.update_token
       Match::MatchesSerializer.new.matches_for_prediction(current_matches)
     end
 
@@ -75,19 +90,6 @@ module Routes
 
     get '/login' do
       p params
-    end
-
-    get '/userTasks' do
-      h = { :matches_prediction => "Get all available matches for prediction",
-            :standing => "Get user standings",
-            :points_from_matches => "All predicted matches",
-            :update_profile => "Updating profile info" }
-    end
-
-    get '/test' do
-      match = DBModels::Match.new.match_by_id(3)
-      p match
-      "Here"
     end
 
   end

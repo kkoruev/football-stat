@@ -34,6 +34,28 @@ predictions
 }
 
 
+funrnnndflsrcymwtoldjpzqclsemfjuqmlfjodzefkmxbehqo
+jcbcoibedybeipwreenerlaaevnyfycrliuxpfvpicrldpbait
+
+
+<div *ngIf="isLogged && isAdmin">
+  <ol class="breadcrumb">
+    <li><a href="#">Add matches</a></li>
+    <li><a href="#">Add results</a></li>
+    <li><a href="#">Add teams</a></li>
+    <li><a href="#">Log out</a></li>
+  </ol>
+</div>
+
+<div *ngIf="isLogged && !isAdmin">
+  <ol class="breadcrumb">
+    <li><a href="#">Predict matches</a></li>
+    <li><a href="#">Standing</a></li>
+    <li><a href="#">Statistics</a></li>
+    <li><a href="#">Log out</a></li>
+  </ol>
+</div>
+
 
 ############################### SQL QUERIES ############33
 SELECT * FROM football_stat.matches;
@@ -50,3 +72,7 @@ Select *
 from football_stat.matches m
 left join football_stat.predictions p
 on m.id = p.match_id
+
+
+admin1@football_stat.com
+admin

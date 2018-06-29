@@ -57,6 +57,19 @@ module Routes
     end
 
     get '/teams' do
+      token = request_headers['x_auth_token']
+      halt 400, "Provide token" if token.nil?
+      halt 400, "Session expired" if DBModels::Session.new.expired?(token)
+
+      session = DBModels::Session.new.session(token)
+      halt 400, "Wrong token" if session.nil?
+
+      id = session.user_id
+      user = DBModels::User.new.user(id)
+      halt 400, "Only admin has acces to this resource" unless user.admin?
+
+      token = session.update_token
+      response.headers['X-Auth-Token'] = session.update_token
       Team::TeamSerializer.new.teams_json(DBModels::Team.all)
     end
 
