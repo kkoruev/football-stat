@@ -14,8 +14,11 @@ export class ResultsService {
 
   constructor(private http: HttpClient) { }
 
-  submitResult(match_id, result: Result) {
-    return this.http.post(this.apiUrl + 'admin/matches/' + match_id + '/results', result);
+  submitResult(match_id, result: Result, token) {
+    var headers = new HttpHeaders();
+    headers = headers.set('X-Auth-Token', token);
+      return this.http.post(this.apiUrl + 'admin/matches/' + match_id + '/results', result,
+                        {observe: 'response', headers: headers});
   }
 
 }

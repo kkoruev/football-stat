@@ -7,9 +7,8 @@ module Match
 
     # TODO: Change implementation
     def matches_for_prediction(matches)
-      matches_array = []
-      matches.map do |match|
-        matches_array.push(prediction_hash(match))
+      matches_array = matches.map do |match|
+        prediction_hash(match)
       end
       JSON.generate(matches_array)
     end
@@ -28,6 +27,25 @@ module Match
         json_predictions.push(json_prediction)
       end
       JSON.generate(json_predictions)
+    end
+
+    def statistics(predictions)
+      win1 = 0
+      win2 = 0
+      drawX = 0
+      predictions.each do |predictions_for_one|
+        predictions_for_one.each do |prediction|
+          win1+=1 if prediction.home_score > prediction.away_score
+          win2+=1 if prediction.home_score < prediction.away_score
+          drawX+=1 if prediction.home_score == prediction.away_score
+        end
+      end
+      json_statistic = {
+        :win1 => win1,
+        :win2 => win2,
+        :drawX => drawX
+      }
+      JSON.generate(json_statistic)
     end
 
     private

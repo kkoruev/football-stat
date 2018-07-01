@@ -14,8 +14,18 @@ module DBModels
 
     has n, :predictions
 
+    def all_predictions_for_current
+      all_predictions = []
+      matches = self.current
+      matches.each do |match|
+        predictions = DBModels::Prediction.new.matches_by_id(match.id)
+        all_predictions.push(predictions)
+      end
+      all_predictions
+    end
+
     def current
-      DBModels::Match.all(:home_score => nil)
+      DBModels::Match.all(home_score: nil)
     end
 
     def matches_from_gameweek(gameweek)

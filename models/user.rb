@@ -18,6 +18,10 @@ module DBModels
 
     has n, :predictions
 
+    def users_standing
+      DBModels::User.all(:order => [:points.desc])
+    end
+
     def user(id)
       DBModels::User.first(:id => id)
     end

@@ -16,6 +16,9 @@ import { PredictionsComponent } from './predictions/predictions.component';
 import { AddMatchesService } from "./admin/add-matches/add-matches.service";
 import { SharedModule } from "./shared/shared.module";
 import { SessionExpiredComponent } from './session-expired/session-expired.component';
+import { PredictionService } from "./predictions/prediction.service";
+import { StandingComponent } from './standing/standing.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 
 @NgModule({
@@ -24,7 +27,9 @@ import { SessionExpiredComponent } from './session-expired/session-expired.compo
     LoginComponent,
     RegisterComponent,
     PredictionsComponent,
-    SessionExpiredComponent
+    SessionExpiredComponent,
+    StandingComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +40,7 @@ import { SessionExpiredComponent } from './session-expired/session-expired.compo
     AdminModule,
     SharedModule.forRoot({token: ''})
   ],
-  providers: [UserService, AddMatchesService],
+  providers: [UserService, AddMatchesService, PredictionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

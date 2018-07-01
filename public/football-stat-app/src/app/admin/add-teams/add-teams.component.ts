@@ -4,6 +4,7 @@ import { AddTeamsService } from './add-teams.service';
 
 import { Team } from '../../types/team';
 import { SharedTokenService } from "../../shared/shared-token.service";
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-add-teams',
@@ -16,6 +17,7 @@ export class AddTeamsComponent implements OnInit {
   newTeam = '';
   data = '';
   constructor(private addTeamsService: AddTeamsService,
+              private router: Router,
               private sharedTokenService: SharedTokenService) { }
 
   ngOnInit() {
@@ -29,7 +31,9 @@ export class AddTeamsComponent implements OnInit {
         this.sharedTokenService.setToken(response.headers.get('X-Auth-Token'))
         console.log(this.teams);
       }, error => {
-
+        if(error.status === 401) {
+          this.router.navigate(['/expired']);
+        }
       }
     );
   }
@@ -46,6 +50,8 @@ export class AddTeamsComponent implements OnInit {
         this.sharedTokenService.setToken(error.headers.get('X-Auth-Token'))
         this.newTeam = '';
         this.getData();
+      } else if(error.status === 401){
+        this.router.navigate(['/expired']);
       } else {
         this.data = error.error
       }
@@ -62,6 +68,8 @@ export class AddTeamsComponent implements OnInit {
         if(error.status === 200) {
           this.sharedTokenService.setToken(error.headers.get('X-Auth-Token'))
           this.getData();
+        } else if(error.status === 401){
+          this.router.navigate(['/expired']);
         } else {
           this.data = error.error
         }

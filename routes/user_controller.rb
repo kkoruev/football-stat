@@ -25,7 +25,6 @@ module Routes
 
       begin
         user = user.authenticate(password)
-        p user.role
         session = DBModels::Session.new.user_session(user.email)
         token = session.update_token unless session.nil?
         response.headers['X-Auth-Token'] = token unless token.nil?
@@ -41,15 +40,18 @@ module Routes
 
     get '/matches' do
       token = request_headers['x_auth_token']
-      halt 400, "Provide token" if token.nil?
-      halt 400, "Session expired" if DBModels::Session.new.expired?(token)
+      halt 401, "Provide token" if token.nil?
+      halt 401, "Session expired" if DBModels::Session.new.expired?(token)
 
       session = DBModels::Session.new.session(token)
-      halt 400, "Wrong token" if session.nil?
+      halt 401, "Wrong token" if session.nil?
 
       id = session.user_id
       user = DBModels::User.new.user(id)
-      halt 400, "Admin can not open this page" if user.admin?
+      halt 403, "Admin can not open this page" if user.admin?
+
+      token = session.update_token
+      response.headers['X-Auth-Token'] = session.update_token
 
       matches = DBModels::Match.new.current
       predictions = DBModels::Prediction.new.current_predictions_by_user(id)
@@ -69,11 +71,24 @@ module Routes
     end
 
     post '/predictions' do
-      user_id = 2
+      token = request_headers['x_auth_token']
+      halt 401, "Provide token" if token.nil?
+      halt 401, "Session expired" if DBModels::Session.new.expired?(token)
+
+      session = DBModels::Session.new.session(token)
+      halt 401, "Wrong token" if session.nil?
+
+      token = session.update_token
+      response.headers['X-Auth-Token'] = session.update_token
+
+      id = session.user_id
+      user = DBModels::User.new.user(id)
+      halt 403, "Admin can not open this page" if user.admin?
+
       request_params = parse_params(request.body.read)
       halt 400, parse_error if request_params.empty?
       prediction = Match::MatchesDeserializer.new.prediction(request_params)
-      prediction.user_id = user_id
+      prediction.user_id = id
       begin
         prediction.save
       rescue DataMapper::SaveFailureError => ex
@@ -82,14 +97,59 @@ module Routes
     end
 
     get '/predictions' do
-      user_id = 2
-      # TODO: Should make session based on cookies
-      predictions = DBModels::Prediction.new.predicted_matches(user_id)
+      token = request_headers['x_auth_token']
+      halt 401, "Provide token" if token.nil?
+      halt 401, "Session expired" if DBModels::Session.new.expired?(token)
+
+      session = DBModels::Session.new.session(token)
+      halt 401, "Wrong token" if session.nil?
+
+      token = session.update_token
+      response.headers['X-Auth-Token'] = session.update_token
+
+      id = session.user_id
+      user = DBModels::User.new.user(id)
+      halt 403, "Admin can not open this page" if user.admin?
+
+      predictions = DBModels::Prediction.new.predicted_matches(id)
       Match::MatchesSerializer.new.predictions(predictions)
     end
 
-    get '/login' do
-      p params
+    get '/standing' do
+      token = request_headers['x_auth_token']
+      halt 401, "Provide token" if token.nil?
+      halt 401, "Session expired" if DBModels::Session.new.expired?(token)
+
+      session = DBModels::Session.new.session(token)
+      halt 401, "Wrong token" if session.nil?
+
+      token = session.update_token
+      response.headers['X-Auth-Token'] = session.update_token
+
+      id = session.user_id
+      user = DBModels::User.new.user(id)
+      halt 403, "Admin can not open this page" if user.admin?
+
+      UserSerializer.new.standing(user.users_standing)
+    end
+
+    get '/statistics' do
+      token = request_headers['x_auth_token']
+      halt 401, "Provide token" if token.nil?
+      halt 401, "Session expired" if DBModels::Session.new.expired?(token)
+
+      session = DBModels::Session.new.session(token)
+      halt 401, "Wrong token" if session.nil?
+
+      token = session.update_token
+      response.headers['X-Auth-Token'] = session.update_token
+
+      id = session.user_id
+      user = DBModels::User.new.user(id)
+      halt 403, "Admin can not open this page" if user.admin?
+
+      all_predictions = DBModels::Match.new.all_predictions_for_current
+      Match::MatchesSerializer.new.statistics(all_predictions)
     end
 
   end

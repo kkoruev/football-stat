@@ -12,12 +12,18 @@ export class AddMatchesService {
     private http: HttpClient,
   ) { }
 
-  submitMatch(match: Match) {
-    return this.http.post(this.apiUrl + 'admin/matches', match);
+  submitMatch(match: Match, token) {
+    var headers = new HttpHeaders();
+    headers = headers.set('X-Auth-Token', token);
+    return this.http.post(this.apiUrl + 'admin/matches', match,
+              {observe: 'response', headers: headers});
   }
 
-  getMatches() {
-    return this.http.get<Match[]>(this.apiUrl + 'admin/matches');
+  getMatches(token) {
+    var headers = new HttpHeaders();
+    headers = headers.set('X-Auth-Token', token);
+    return this.http.get<Match[]>(this.apiUrl + 'admin/matches',
+              {observe: 'response', headers: headers});
   }
 
   getUserMatches(token) {

@@ -1,0 +1,73 @@
+<ol class="breadcrumb">
+  <li (click)="predictMatches()"><a>Predict matches</a></li>
+  <li (click)="standing()"><a>Standing</a></li>
+  <li (click)="statistics()"><a>Statistics</a></li>
+  <li (click)="logout()"><a>Log out</a></li>
+</ol>
+
+
+<div>
+  <div class="col-md-1">
+    <label> Gameweek </label>
+  </div>
+
+  <div class="col-md-1">
+    <label> Date </label>
+  </div>
+
+  <div class="col-md-2">
+    <label> Home team </label>
+  </div>
+
+  <div class="col-md-2">
+    <label> Away team </label>
+  </div>
+
+  <div class="col-md-1">
+    <label> Win1 </label>
+  </div>
+
+  <div class="col-md-1">
+    <label> DrawX </label>
+  </div>
+
+  <div class="col-md-1">
+    <label> Win2 </label>
+  </div>
+
+  <div class="col-md-1">
+    <label> Prev1 </label>
+  </div>
+
+  <div class="col-md-1">
+    <label> PrevX </label>
+  </div>
+
+  <div class="col-md-1">
+    <label> Prev2 </label>
+  </div>
+</div>
+
+<div *ngFor="let m of matches">
+  <div class="col-md-1">
+    <label> {{m.gameweek}} </label>
+  </div>
+
+  <div class="col-md-1">
+    <label> {{m.date}} </label>
+  </div>
+
+  <div class="col-md-3">
+    <label> {{m.home_team}} </label>
+      <input #home_team type=number style="width: 100px">
+  </div>
+
+  <div class="col-md-1">
+    VS
+  </div>
+
+  <div class="col-md-3">
+    <label> {{m.away_team}} </label>
+    <input #away_team type=number style="width: 100px">
+  </div>
+</div>

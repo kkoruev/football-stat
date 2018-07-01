@@ -1,7 +1,7 @@
 <ol class="breadcrumb">
-  <li><a href="admin/add-matches">Add matches</a></li>
-  <li><a href="admin/add-results">Add results</a></li>
-  <li><a href="admin/add-teams">Add teams</a></li>
-  <li><a href="#">Log out</a></li>
+  <li (click)="addMatches()"><a>Add matches</a></li>
+  <li (click)="addResults()"><a>Add results</a></li>
+  <li (click)="addTeams()"><a>Add teams</a></li>
+  <li (click)="logout()"><a>Log out</a></li>
 </ol>
 <router-outlet></router-outlet>

@@ -1,16 +1,14 @@
 <ol class="breadcrumb">
-  <li><a href="#">Predict matches</a></li>
-  <li><a href="#">Standing</a></li>
-  <li><a href="#">Statistics</a></li>
-  <li><a href="#">Log out</a></li>
+  <li (click)="predictMatches()"><a>Predict matches</a></li>
+  <li (click)="standing()"><a>Standing</a></li>
+  <li (click)="statistics()"><a>Statistics</a></li>
+  <li (click)="logout()"><a>Log out</a></li>
 </ol>
+
 
 <div *ngIf="error">
   {{error}}
 </div>
-
-<p> {{logged}} </p>
-
 
 <div *ngFor="let m of matches">
   <div class="col-md-1">
@@ -36,6 +34,37 @@
   </div>
 
   <div class="col-md-3">
-   <button (click)="submitResult(m.id, home_team.value, away_team.value)">Submit result</button>
+   <button (click)="submitPrediction(home_team.value, away_team.value, m.id)">Submit result</button>
   </div>
+</div>
+
+<br>
+<h1> Added matches for predictions </h1>
+
+<div *ngFor="let p of predictedMatches">
+  <div class="col-md-1">
+    <label> {{p.gameweek}} </label>
+  </div>
+
+  <div class="col-md-2">
+    <label> {{p.home_team}} </label>
+  </div>
+
+  <div class="col-md-2">
+    VS
+  </div>
+
+  <div class="col-md-2">
+    <label> {{p.away_team}} </label>
+  </div>
+
+  <div class="col-md-2">
+    <label> {{p.home_score}} </label>
+  </div>
+
+  <div class="col-md-2">
+    <label> {{p.away_score}} </label>
+  </div>
+  <br>
+  <br>
 </div>

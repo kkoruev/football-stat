@@ -10,6 +10,7 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 import { User } from './types/user';
 import { Session } from "./types/session";
+import { UserPoints } from "./types/user_points";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -37,8 +38,10 @@ export class UserService {
     return this.http.post(this.registerUrl, user)
   }
 
-  isLogged() {
-    return this.http.get(this.apiUril + '/logged');
+  usersStanding(token) {
+    var headers = new HttpHeaders();
+    headers = headers.set('X-Auth-Token', token);
+    return this.http.get<UserPoints[]>(this.apiUril + '/standing',
+                      {observe: 'response', headers: headers});
   }
-
 }
